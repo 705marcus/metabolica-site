@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metabolica — Advanced Nutrition with Clinical Purpose</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nuosu+SIL&display=swap" rel="stylesheet">
+    <style>
+        /*
+         * Apostrophe/quote gap fix: Nuosu SIL lacks curly quote glyphs (U+2018–201D),
+         * causing the browser to substitute Georgia which has different metrics and
+         * creates a visible gap. We remap these code-points to Helvetica Neue so the
+         * fallback is always consistent with the body font.
+         */
+        @font-face {
+            font-family: 'Nuosu SIL';
+            src: local('Helvetica Neue'), local('Helvetica'), local('Arial');
+            /* Remap punctuation glyphs that Nuosu SIL renders incorrectly
+               (curly quotes, apostrophes, ellipsis) to Helvetica so metrics
+               stay consistent and no gap/raise appears around these chars. */
+            unicode-range: U+0027, U+0060, U+00B4, U+2018, U+2019, U+201A, U+201B,
+                           U+201C, U+201D, U+201E, U+201F, U+2032, U+2033,
+                           U+2026, U+2025, U+22EF;
+        }
+    </style>
+
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --navy:       #153556;
+            --navy-dark:  #0d2238;
+            --navy-mid:   #1a4472;
+            --bg:         #F3F1ED;
+            --cream-card: #E8E2D6;
+            --white:      #FFFFFF;
+
+            /* Nuosu SIL for all display headings */
+            --font-display: 'Nuosu SIL', Georgia, serif;
+            /* Helvetica for all body / UI text */
+            --font-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+            --nav-height: 64px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg);
+            color: var(--navy);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ═══════════════════════════════════════════
+           NAVIGATION
+        ═══════════════════════════════════════════ */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 200;
+            height: var(--nav-height);
+            background: var(--bg);
+            border-bottom: 1px solid rgba(21, 53, 86, 0.10);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 3rem;
+        }
+
+        .nav-logo {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--navy);
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .nav-center {
+            display: flex;
+            align-items: center;
+            gap: 2.25rem;
+            list-style: none;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .nav-center a {
+            font-family: var(--font-body);
+            font-size: 0.78rem;
+            font-weight: 400;
+            color: var(--navy);
+            text-decoration: none;
+            letter-spacing: 0.01em;
+            transition: opacity 0.2s ease;
+        }
+
+        .nav-center a:hover { opacity: 0.45; }
+
+        .nav-right { flex-shrink: 0; }
+
+        .nav-cta {
+            font-family: var(--font-body);
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--navy);
+            text-decoration: none;
+            letter-spacing: 0.01em;
+            transition: opacity 0.2s ease;
+        }
+
+        .nav-cta:hover { opacity: 0.45; }
+
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+            background: none;
+            border: none;
+        }
+
+        .nav-hamburger span {
+            display: block;
+            width: 22px;
+            height: 1.5px;
+            background: var(--navy);
+            border-radius: 2px;
+            transition: transform 0.25s, opacity 0.25s;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: var(--nav-height); left: 0; right: 0;
+            background: var(--bg);
+            border-bottom: 1px solid rgba(21, 53, 86, 0.10);
+            padding: 1.5rem 2rem;
+            z-index: 190;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .mobile-menu.open { display: flex; }
+
+        .mobile-menu a {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--navy);
+            text-decoration: none;
+            padding: 0.25rem 0;
+            border-bottom: 1px solid rgba(21, 53, 86, 0.07);
+        }
+
+        /* ═══════════════════════════════════════════
+           SHARED UTILITIES
+        ═══════════════════════════════════════════ */
+        .eyebrow {
+            font-family: var(--font-body);
+            font-size: 0.62rem;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(21, 53, 86, 0.45);
+            display: block;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            background: var(--navy);
+            color: var(--white);
+            text-decoration: none;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            padding: 0.9rem 1.85rem;
+            border-radius: 100px;
+            transition: background 0.22s, transform 0.15s, box-shadow 0.22s;
+            box-shadow: 0 2px 12px rgba(21, 53, 86, 0.18);
+        }
+
+        .btn-primary:hover {
+            background: var(--navy-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(21, 53, 86, 0.25);
+        }
+
+        .btn-light {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            background: var(--white);
+            color: var(--navy);
+            text-decoration: none;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            padding: 0.9rem 2.25rem;
+            border-radius: 100px;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+        }
+
+        .btn-light:hover {
+            background: #e8f0f8;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .section-divider {
+            width: 100%;
+            max-width: 920px;
+            margin: 0 auto;
+            height: 1px;
+            background: rgba(21, 53, 86, 0.10);
+        }
+
+        /* ═══════════════════════════════════════════
+           HERO
+        ═══════════════════════════════════════════ */
+        .hero {
+            padding-top: var(--nav-height);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-top {
+            padding: 4.5rem 2rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .funding-banner {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-family: var(--font-body);
+            font-size: 0.62rem;
+            font-weight: 500;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--navy);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(21, 53, 86, 0.4);
+            padding-bottom: 2px;
+            margin-bottom: 3rem;
+            transition: opacity 0.2s;
+        }
+
+        .funding-banner:hover { opacity: 0.6; }
+
+        /* One-line headline — scales with viewport, never wraps */
+        .hero-headline {
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-size: clamp(2rem, 5.6vw, 6.5rem);
+            line-height: 1;
+            letter-spacing: 0;
+            color: var(--navy);
+            white-space: nowrap;
+            margin-bottom: 1.75rem;
+        }
+
+        /* Hero subtext — clean Helvetica, smaller, clearly secondary */
+        .hero-sub {
+            font-family: var(--font-body);
+            font-size: clamp(0.8rem, 1.4vw, 0.95rem);
+            font-weight: 400;
+            line-height: 1.75;
+            color: rgba(21, 53, 86, 0.65);
+            max-width: 480px;
+            margin: 0 auto 2.75rem;
+            letter-spacing: 0.01em;
+        }
+
+        .hero-sub em {
+            font-style: italic;
+            color: var(--navy);
+            font-weight: 500;
+        }
+
+        /* Product image */
+        .product-wrap {
+            width: 100%;
+            max-width: 960px;
+            padding: 3.5rem 2rem 0;
+        }
+
+        .product-container {
+            border-radius: 1.25rem;
+            overflow: hidden;
+            background: linear-gradient(160deg, #E5DECE 0%, #D9D0BE 55%, #CFC6B0 100%);
+            aspect-ratio: 16 / 8.5;
+            position: relative;
+        }
+
+        .product-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* Fallback illustration if image is missing */
+        .product-container:not(:has(img)) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ═══════════════════════════════════════════
+           MISSION SECTION
+        ═══════════════════════════════════════════ */
+        .mission-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 6rem 2rem 6.5rem;
+        }
+
+        .mission-wordmark {
+            max-width: clamp(180px, 28vw, 340px);
+            height: auto;
+            margin-bottom: 2.25rem;
+            display: block;
+            /* Tint SVG wordmark to brand navy (#153556) */
+            filter: brightness(0) saturate(100%)
+                    invert(14%) sepia(55%) saturate(700%)
+                    hue-rotate(191deg) brightness(88%) contrast(105%);
+        }
+
+        .mission-divider {
+            width: 40px;
+            height: 1px;
+            background: rgba(21, 53, 86, 0.25);
+            margin: 0 auto 2.25rem;
+        }
+
+        .mission-statement {
+            font-family: var(--font-display);
+            font-size: clamp(1.4rem, 2.8vw, 2.1rem);
+            font-weight: 400;
+            font-style: italic;
+            line-height: 1.4;
+            color: var(--navy);
+            max-width: 620px;
+            letter-spacing: 0;
+        }
+
+        /* ═══════════════════════════════════════════
+           OUR STORY
+        ═══════════════════════════════════════════ */
+        .story-section {
+            width: 100%;
+            max-width: 1060px;
+            margin: 0 auto;
+            padding: 6rem 2rem;
+        }
+
+        /* Unified header above both parts */
+        .story-intro {
+            margin-bottom: 2.25rem;
+            max-width: 720px;
+        }
+
+        .story-intro .eyebrow {
+            margin-bottom: 1rem;
+        }
+
+        .story-intro-headline {
+            font-family: var(--font-display);
+            font-size: clamp(2.25rem, 4.8vw, 3.75rem);
+            font-weight: 400;
+            line-height: 1.15;
+            letter-spacing: 0;
+            color: var(--navy);
+        }
+
+        /* Each story part */
+        .story-part {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+            padding: 3.5rem 0;
+            position: relative;
+        }
+
+        /* Reverse layout for Part 2 */
+        .story-part.reverse {
+            direction: rtl;
+        }
+
+        .story-part.reverse > * {
+            direction: ltr;
+        }
+
+        /* Chapter label */
+        .story-chapter {
+            font-family: var(--font-body);
+            font-size: 0.62rem;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(21, 53, 86, 0.35);
+            margin-bottom: 1.25rem;
+            display: block;
+        }
+
+        .story-quote {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+            font-weight: 400;
+            line-height: 1.25;
+            letter-spacing: 0;
+            word-spacing: normal;
+            color: var(--navy);
+            margin-bottom: 2rem;
+        }
+
+        .story-quote em { font-style: italic; }
+
+        .story-body {
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1.85;
+            color: rgba(21, 53, 86, 0.65);
+            margin-bottom: 1.1rem;
+        }
+
+        .story-body:last-child { margin-bottom: 0; }
+
+        .story-accent {
+            font-family: var(--font-display);
+            font-size: clamp(1rem, 1.8vw, 1.3rem);
+            font-weight: 400;
+            font-style: italic;
+            letter-spacing: 0;
+            word-spacing: normal;
+            color: var(--navy);
+            line-height: 1.45;
+            padding-left: 1.25rem;
+            border-left: 2px solid rgba(21, 53, 86, 0.3);
+            margin: 1.75rem 0;
+        }
+
+        .story-questions {
+            list-style: none;
+            padding-left: 1.25rem;
+            border-left: 2px solid rgba(21, 53, 86, 0.15);
+            margin: 1.5rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+        }
+
+        .story-questions li {
+            font-family: var(--font-body);
+            font-size: 0.82rem;
+            font-weight: 400;
+            color: rgba(21, 53, 86, 0.65);
+            line-height: 1.5;
+        }
+
+        /* Story photo */
+        .story-photo {
+            border-radius: 0.875rem;
+            overflow: hidden;
+            background: #c8d4e0;
+            aspect-ratio: 3 / 4;
+            position: relative;
+        }
+
+        .story-photo.landscape {
+            aspect-ratio: 4 / 3;
+            align-self: center;
+        }
+
+        .story-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+        }
+
+        .story-photo.landscape img {
+            object-position: center center;
+        }
+
+        /* ═══════════════════════════════════════════
+           PRODUCT BANNER
+        ═══════════════════════════════════════════ */
+        .product-banner {
+            width: 100%;
+            overflow: hidden;
+            line-height: 0; /* remove inline-block gap */
+        }
+
+        .product-banner img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* ═══════════════════════════════════════════
+           SCIENCE CALLOUT
+        ═══════════════════════════════════════════ */
+        .science-callout {
+            width: 100%;
+            background: var(--navy);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .science-callout .eyebrow {
+            color: rgba(255,255,255,0.35);
+            margin-bottom: 1.5rem;
+        }
+
+        .science-headline {
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 3.8vw, 3.1rem);
+            font-weight: 400;
+            line-height: 1.2;
+            color: var(--white);
+            max-width: 720px;
+            margin-bottom: 0.9rem;
+        }
+
+        .science-sub {
+            font-family: var(--font-display);
+            font-size: clamp(1.2rem, 2.2vw, 1.75rem);
+            font-weight: 400;
+            font-style: italic;
+            line-height: 1.4;
+            color: rgba(255,255,255,0.5);
+            max-width: 620px;
+        }
+
+        /* ═══════════════════════════════════════════
+           6 CLINICAL PILLARS
+        ═══════════════════════════════════════════ */
+        .pillars-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 7rem 2rem;
+        }
+
+        .pillars-header {
+            text-align: center;
+            max-width: 580px;
+            margin-bottom: 4rem;
+        }
+
+        .pillars-header .eyebrow { margin-bottom: 1.25rem; }
+
+        .pillars-headline {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4.2vw, 3.25rem);
+            font-weight: 400;
+            line-height: 1.1;
+            color: var(--navy);
+            margin-bottom: 0.85rem;
+        }
+
+        .pillars-sub {
+            font-family: var(--font-body);
+            font-size: 0.78rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            color: rgba(21, 53, 86, 0.45);
+        }
+
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            width: 100%;
+            max-width: 960px;
+        }
+
+        .pillar-card {
+            background: var(--navy);
+            border-radius: 0.875rem;
+            padding: 2.25rem 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 40px rgba(13, 34, 56, 0.25);
+        }
+
+        .pillar-number {
+            font-family: var(--font-display);
+            font-size: 2.25rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.15);
+            line-height: 1;
+        }
+
+        .pillar-title {
+            font-family: var(--font-body);
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.55;
+        }
+
+        .pillar-desc {
+            font-family: var(--font-body);
+            font-size: 0.78rem;
+            font-weight: 400;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.45);
+        }
+
+        /* ═══════════════════════════════════════════
+           COMPARISON TABLE
+        ═══════════════════════════════════════════ */
+        .compare-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 2rem 7rem;
+        }
+
+        .compare-header {
+            text-align: center;
+            max-width: 680px;
+            margin-bottom: 3.5rem;
+        }
+
+        .compare-header .eyebrow { margin-bottom: 1.25rem; }
+
+        .compare-headline {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4.25rem);
+            font-weight: 400;
+            font-style: italic;
+            line-height: 1.05;
+            color: var(--navy);
+            margin-bottom: 1.25rem;
+        }
+
+        .compare-sub {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 400;
+            line-height: 1.7;
+            color: rgba(21, 53, 86, 0.55);
+        }
+
+        .compare-table-wrap {
+            width: 100%;
+            max-width: 900px;
+            overflow-x: auto;
+        }
+
+        table.compare {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--font-body);
+        }
+
+        table.compare thead th {
+            padding: 1rem 1.5rem;
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: rgba(21,53,86,0.4);
+            border-bottom: 1px solid rgba(21,53,86,0.10);
+        }
+
+        table.compare thead th:first-child {
+            text-align: left;
+            width: 28%;
+        }
+
+        table.compare thead th.col-metabolica {
+            background: var(--navy);
+            color: rgba(255,255,255,0.85);
+            border-radius: 0.5rem 0.5rem 0 0;
+        }
+
+        table.compare tbody tr {
+            border-bottom: 1px solid rgba(21,53,86,0.07);
+        }
+
+        table.compare tbody tr:last-child { border-bottom: none; }
+
+        table.compare td {
+            padding: 1rem 1.5rem;
+            font-size: 0.82rem;
+            font-weight: 400;
+            color: var(--navy);
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        table.compare td:first-child {
+            text-align: left;
+            font-size: 0.78rem;
+            color: rgba(21,53,86,0.55);
+        }
+
+        table.compare td.col-metabolica {
+            background: rgba(21,53,86,0.05);
+            font-weight: 600;
+        }
+
+        table.compare td.col-metabolica.highlight {
+            color: #1a6b3c;
+        }
+
+        /* ═══════════════════════════════════════════
+           FOUNDING PARTNER CTA
+        ═══════════════════════════════════════════ */
+        .cta-section {
+            width: 100%;
+            background: var(--navy);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 7rem 2rem;
+            text-align: center;
+        }
+
+        .cta-section .eyebrow {
+            color: rgba(255,255,255,0.35);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-headline {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4.2vw, 3.5rem);
+            font-weight: 400;
+            line-height: 1.15;
+            color: var(--white);
+            max-width: 640px;
+            margin-bottom: 0.75rem;
+        }
+
+        .cta-tagline {
+            font-family: var(--font-body);
+            font-size: 0.78rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.35);
+            letter-spacing: 0.04em;
+            margin-bottom: 4rem;
+        }
+
+        .cta-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            width: 100%;
+            max-width: 840px;
+            margin-bottom: 3.5rem;
+        }
+
+        .cta-card {
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 0.875rem;
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.65rem;
+            position: relative;
+        }
+
+        .cta-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 2px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 0 0 0.875rem 0.875rem;
+        }
+
+        .cta-card-number {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 4.5vw, 3.75rem);
+            font-weight: 400;
+            color: var(--white);
+            line-height: 1;
+        }
+
+        .cta-card-label {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .cta-card-divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(255,255,255,0.07);
+            margin: 0.4rem 0;
+        }
+
+        .cta-card-desc {
+            font-family: var(--font-body);
+            font-size: 0.78rem;
+            font-weight: 400;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.38);
+        }
+
+        .cta-card-desc strong {
+            color: rgba(255,255,255,0.65);
+            font-weight: 500;
+        }
+
+        .cta-footnote {
+            font-family: var(--font-body);
+            font-size: 0.68rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.22);
+            margin-top: 2rem;
+            max-width: 460px;
+            line-height: 1.65;
+        }
+
+        /* ═══════════════════════════════════════════
+           FOOTER
+        ═══════════════════════════════════════════ */
+        footer {
+            background: var(--navy-dark);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.75rem 3rem;
+        }
+
+        .footer-logo {
+            font-family: var(--font-body);
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.3);
+            text-decoration: none;
+        }
+
+        .footer-copy {
+            font-family: var(--font-body);
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.2);
+        }
+
+        /* ═══════════════════════════════════════════
+           SCROLL REVEAL
+        ═══════════════════════════════════════════ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+        .reveal-delay-5 { transition-delay: 0.5s; }
+        .reveal-delay-6 { transition-delay: 0.6s; }
+
+        /* ═══════════════════════════════════════════
+           RESPONSIVE — TABLET ≤ 900px
+        ═══════════════════════════════════════════ */
+        @media (max-width: 900px) {
+            nav { padding: 0 2rem; }
+            .nav-center { gap: 1.75rem; }
+
+            .story-part {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+            .story-part.reverse { direction: ltr; }
+            .story-photo { aspect-ratio: 4 / 3; }
+
+            .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+            .cta-cards { grid-template-columns: 1fr; max-width: 400px; }
+        }
+
+        /* ═══════════════════════════════════════════
+           RESPONSIVE — SMALL TABLET ≤ 768px
+        ═══════════════════════════════════════════ */
+        @media (max-width: 768px) {
+            nav { padding: 0 1.5rem; }
+            .nav-center { display: none; }
+            .nav-right .nav-cta { display: none; }
+            .nav-hamburger { display: flex; }
+
+            .hero-top { padding: 3rem 1.5rem 0; }
+            /* On small screens let headline wrap naturally */
+            .hero-headline {
+                white-space: normal;
+                font-size: clamp(2.25rem, 10vw, 5rem);
+            }
+            .hero-sub { font-size: 0.85rem; }
+            .product-wrap { padding: 2.5rem 1rem 0; }
+            .product-container { border-radius: 1rem; aspect-ratio: 4/3; }
+
+            .copy-section { padding: 3.5rem 1.5rem 4rem; }
+            .story-section { padding: 4rem 1.5rem; }
+            .story-intro { margin-bottom: 1.75rem; }
+            .pillars-section { padding: 5rem 1.5rem; }
+            .pillars-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .compare-section { padding: 0 1.5rem 5rem; }
+            .cta-section { padding: 5rem 1.5rem; }
+            footer { padding: 1.5rem; flex-direction: column; gap: 0.75rem; text-align: center; }
+        }
+
+        /* ═══════════════════════════════════════════
+           RESPONSIVE — MOBILE ≤ 480px
+        ═══════════════════════════════════════════ */
+        @media (max-width: 480px) {
+            nav { padding: 0 1.25rem; }
+            .hero-top { padding: 2.5rem 1.25rem 0; }
+            .hero-headline { font-size: clamp(2rem, 12vw, 3.5rem); }
+            .product-wrap { padding: 2rem 0.75rem 0; }
+            .product-container { border-radius: 0.875rem; }
+
+            .copy-section { padding: 3rem 1.25rem 3.5rem; }
+            .story-section { padding: 3.5rem 1.25rem; }
+            .science-callout { padding: 4.5rem 1.25rem; }
+            .pillars-section { padding: 4rem 1.25rem; }
+            .compare-section { padding: 0 1.25rem 4rem; }
+            .cta-section { padding: 4rem 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ NAV ═══════════════════════════════════ -->
+    <nav>
+        <a href="#home" class="nav-logo">Metabolica</a>
+
+        <ul class="nav-center">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="ingredients.html">Ingredients</a></li>
+            <li><a href="#clinics">Clinics</a></li>
+        </ul>
+
+        <div class="nav-right">
+            <a href="mailto:s.rallis@gmail.com" class="nav-cta">Join Waitlist &nbsp;&rarr;</a>
+        </div>
+
+        <button class="nav-hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="about.html" onclick="closeMobileMenu()">About Us</a>
+        <a href="ingredients.html" onclick="closeMobileMenu()">Ingredients</a>
+        <a href="#clinics" onclick="closeMobileMenu()">Clinics</a>
+        <a href="mailto:s.rallis@gmail.com">Join Waitlist &rarr;</a>
+    </div>
+
+    <!-- ═══ HERO ═══════════════════════════════════ -->
+    <section class="hero" id="home">
+        <div class="hero-top">
+            <a href="mailto:s.rallis@gmail.com" class="funding-banner">
+                Metabolica Pre&#8209;Series A Funding &nbsp;&rarr;
+            </a>
+
+            <h1 class="hero-headline">Advanced Nutrition.</h1>
+
+            <p class="hero-sub">
+                Clinically formulated to address the unique metabolic vulnerabilities
+                of <em>cancer patients undergoing treatment or recovery.</em>
+            </p>
+
+            <a href="mailto:s.rallis@gmail.com" class="btn-primary">
+                Join Patient Waitlist &nbsp;&rarr;
+            </a>
+        </div>
+
+        <div class="product-wrap">
+            <div class="product-container">
+                <img src="images/product.jpg" alt="Metabolica Advanced Nutrition — Vanilla">
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ MISSION SECTION ══════════════════════ -->
+    <section class="mission-section" id="mission">
+        <!--
+            Drop your wordmark SVG into the logo/ folder and name it wordmark.svg.
+            The <img> below will display it automatically.
+        -->
+        <img
+            src="logo/wordmark.svg"
+            alt="Metabolica"
+            class="mission-wordmark reveal"
+        >
+        <div class="mission-divider reveal reveal-delay-1"></div>
+        <p class="mission-statement reveal reveal-delay-2">
+            We believe in a world where cancer patients<br>
+            live long and healthy lives.
+        </p>
+    </section>
+
+    <!-- ═══ OUR STORY ══════════════════════════════ -->
+    <section class="story-section" id="story">
+
+        <!-- Unified intro -->
+        <div class="story-intro reveal">
+            <span class="eyebrow">Our Story</span>
+            <h2 class="story-intro-headline">
+                How a clinical frustration<br>
+                became <em>a family mission.</em>
+            </h2>
+        </div>
+
+        <!-- Part 1 -->
+        <div class="story-part">
+            <div class="story-text reveal">
+                <span class="story-chapter">Part 01</span>
+                <h3 class="story-quote">
+                    &ldquo;There has to be something <em>better&hellip;</em>&rdquo;
+                </h3>
+                <p class="story-body">
+                    As my clinical work shifted deeper into integrative oncology, I kept
+                    encountering the same problem. Cancer patients were being given nutrition
+                    options built for calories and convenience &mdash; not for the acute
+                    metabolic reality of their condition.
+                </p>
+                <p class="story-accent">
+                    These formulas were loaded with sugar, dairy proteins, and inflammatory
+                    oils &mdash; <em>inadvertently driving the very metabolic factors we were
+                    trying to suppress.</em>
+                </p>
+                <p class="story-body">
+                    I tried to find something better, examining every professional line and
+                    every &ldquo;medical nutrition&rdquo; option on the market. Nothing fit
+                    the bill. The ingredients were wrong. The metabolic logic was wrong.
+                </p>
+            </div>
+            <div class="story-photo reveal reveal-delay-2">
+                <img src="images/dr-rallis.jpg" alt="Dr. Steve Rallis DC, ND">
+            </div>
+        </div>
+
+        <!-- Part 2 -->
+        <div class="story-part reverse">
+            <div class="story-text reveal">
+                <span class="story-chapter">Part 02</span>
+                <h3 class="story-quote">
+                    &ldquo;We couldn&rsquo;t find it, <em>so we made it.</em>&rdquo;
+                </h3>
+                <p class="story-body">
+                    If we wanted this to exist, we had to build it ourselves. Metabolica
+                    became a family project &mdash; built around the same clinical questions
+                    I ask when caring for patients undergoing chemotherapy, radiation,
+                    or surgery:
+                </p>
+                <ul class="story-questions">
+                    <li>Can we lower glucose, insulin, and inflammation?</li>
+                    <li>Can we support tissue healing while limiting growth factors?</li>
+                    <li>Can we apply metabolic pressure to unhealthy cells while protecting healthy ones?</li>
+                    <li>What micronutrient ratios support healing without fueling spread?</li>
+                    <li>Will it be tolerated by patients with nausea or mucositis?</li>
+                </ul>
+                <p class="story-body">
+                    Every nutrient had to earn its place. Three years and many iterations
+                    later &mdash; we finally had it. <strong><em>The very first of its kind.</em></strong>
+                </p>
+            </div>
+            <div class="story-photo landscape reveal reveal-delay-2" style="background:#ddd6c8;">
+                <img src="images/family.jpg" alt="The Rallis family">
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ═══ PRODUCT BANNER ═════════════════════════ -->
+    <div class="product-banner">
+        <img src="images/Product+graphic.jpg" alt="Metabolica — Advanced Nutrition with Clinical Purpose">
+    </div>
+
+    <!-- ═══ SCIENCE CALLOUT ════════════════════════ -->
+    <div class="science-callout">
+        <span class="eyebrow">The Science</span>
+        <h2 class="science-headline reveal">
+            The question is not whether nutrition affects cancer.
+        </h2>
+        <p class="science-sub reveal reveal-delay-1">
+            It is whether we are using that lever &mdash; <em>or ignoring it.</em>
+        </p>
+    </div>
+
+    <!-- ═══ 6 CLINICAL PILLARS ═════════════════════ -->
+    <section class="pillars-section" id="ingredients">
+        <div class="pillars-header">
+            <span class="eyebrow">Clinical Innovation</span>
+            <h2 class="pillars-headline reveal">Built on 6 Clinical Pillars</h2>
+            <p class="pillars-sub reveal reveal-delay-1">Metabolically precise nutrition in nutritional oncology</p>
+        </div>
+
+        <div class="pillars-grid">
+            <div class="pillar-card reveal reveal-delay-1">
+                <span class="pillar-number">01</span>
+                <span class="pillar-title">Glucose Restriction &amp; Insulin&#8209;IGF&#8209;1 Axis Modulation</span>
+                <p class="pillar-desc">Zero added sugar and a very low glycemic index (&lt;15) to starve tumor glycolysis and suppress the insulin-IGF-1 growth signaling axis.</p>
+            </div>
+            <div class="pillar-card reveal reveal-delay-2">
+                <span class="pillar-number">02</span>
+                <span class="pillar-title">Glutamine &amp; Protein Modulation</span>
+                <p class="pillar-desc">Amino acid profile engineered to minimize mTOR/IGF-1 signaling through controlled leucine and low lysine — without compromising host tissue repair.</p>
+            </div>
+            <div class="pillar-card reveal reveal-delay-3">
+                <span class="pillar-number">03</span>
+                <span class="pillar-title">Lipid &amp; Ketone&#8209;Based Metabolism</span>
+                <p class="pillar-desc">MCT oil and BHB provide a clean, non-glycemic energy substrate that healthy cells — not cancer cells — can efficiently utilize.</p>
+            </div>
+            <div class="pillar-card reveal reveal-delay-4">
+                <span class="pillar-number">04</span>
+                <span class="pillar-title">Inflammation &amp; Redox Modulation</span>
+                <p class="pillar-desc">Exclusively MCT-based fats eliminate pro-inflammatory omega-6 oils. No dairy. No inflammatory substrate of any kind.</p>
+            </div>
+            <div class="pillar-card reveal reveal-delay-5">
+                <span class="pillar-number">05</span>
+                <span class="pillar-title">Micronutrient Balance &amp; Physiological Dosing</span>
+                <p class="pillar-desc">Iron and copper — known tumor growth cofactors — are controlled or excluded. Every micronutrient is dosed at physiological, not megadose, levels.</p>
+            </div>
+            <div class="pillar-card reveal reveal-delay-6">
+                <span class="pillar-number">06</span>
+                <span class="pillar-title">Digestive Support &amp; Patient Tolerance</span>
+                <p class="pillar-desc">Digestive enzymes and prebiotic inulin maximize absorption and tolerability for patients experiencing nausea, mucositis, or GI sensitivity.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ COMPARISON TABLE ════════════════════════ -->
+    <section class="compare-section" id="clinics">
+        <div class="compare-header">
+            <span class="eyebrow">How It Compares</span>
+            <h2 class="compare-headline reveal"><em>It doesn&rsquo;t.</em></h2>
+            <p class="compare-sub reveal reveal-delay-1">
+                This is not a subtle difference. Conventional formulas and Metabolica
+                approach cancer nutrition in fundamentally opposite ways.
+            </p>
+        </div>
+
+        <div class="compare-table-wrap reveal">
+            <table class="compare">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Ensure Plus</th>
+                        <th>Boost High Protein</th>
+                        <th class="col-metabolica">Metabolica</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Energy Source</td><td>Sugar + Maltodextrin</td><td>Glucose + Sugar</td><td class="col-metabolica highlight">MCT + BHB + Inulin</td></tr>
+                    <tr><td>Protein Source</td><td>Casein / Whey</td><td>Casein / Whey</td><td class="col-metabolica highlight">Plant (Rice + Pea)</td></tr>
+                    <tr><td>Sugar per serving</td><td>22 g</td><td>20 g</td><td class="col-metabolica highlight">0 g</td></tr>
+                    <tr><td>Glycemic Index</td><td>High (&gt;70)</td><td>High (&gt;65)</td><td class="col-metabolica highlight">Very Low (&lt;15)</td></tr>
+                    <tr><td>Dairy Free</td><td>No</td><td>No</td><td class="col-metabolica highlight">Yes</td></tr>
+                    <tr><td>Inflammatory Oils</td><td>Canola / Corn</td><td>Soy / Canola</td><td class="col-metabolica highlight">None (MCT only)</td></tr>
+                    <tr><td>Iron / Copper Added</td><td>Yes</td><td>Yes</td><td class="col-metabolica highlight">Controlled / Excluded</td></tr>
+                    <tr><td>Digestive Enzymes</td><td>None</td><td>None</td><td class="col-metabolica highlight">Included</td></tr>
+                    <tr><td>Ketogenic Support</td><td>No</td><td>No</td><td class="col-metabolica highlight">Yes</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ═══ FOUNDING PARTNER CTA ═══════════════════ -->
+    <section class="cta-section" id="partner">
+        <span class="eyebrow">The Opportunity</span>
+        <h2 class="cta-headline reveal">Become a Founding Clinical Partner</h2>
+        <p class="cta-tagline reveal">
+            5 exclusive seats &nbsp;&middot;&nbsp; $50,000 per partner &nbsp;&middot;&nbsp; $250,000 total raise
+        </p>
+
+        <div class="cta-cards">
+            <div class="cta-card reveal reveal-delay-1">
+                <span class="cta-card-number">1%</span>
+                <span class="cta-card-label">Equity in Metabolica</span>
+                <div class="cta-card-divider"></div>
+                <p class="cta-card-desc">Ownership in the first premium oncology nutrition brand built for practitioner distribution &mdash; <strong>from the ground floor.</strong></p>
+            </div>
+            <div class="cta-card reveal reveal-delay-2">
+                <span class="cta-card-number">250</span>
+                <span class="cta-card-label">Units of Product</span>
+                <div class="cta-card-divider"></div>
+                <p class="cta-card-desc"><strong>$24,750 retail value.</strong> Ready to deploy in your clinic from day one &mdash; covering your first patient cohort with no additional inventory cost.</p>
+            </div>
+            <div class="cta-card reveal reveal-delay-3">
+                <span class="cta-card-number">$45</span>
+                <span class="cta-card-label">Per Unit &ndash; Always</span>
+                <div class="cta-card-divider"></div>
+                <p class="cta-card-desc">Perpetual access to the lowest wholesale price tier &mdash; <strong>no minimum order requirement, ever.</strong> Order 1 unit or 1,000 at the same rate.</p>
+            </div>
+        </div>
+
+        <a href="mailto:s.rallis@gmail.com?subject=Founding Clinical Partner — Metabolica&body=Hi Dr. Rallis, I'm interested in learning more about the Founding Clinical Partner opportunity." class="btn-light reveal">
+            Express Interest &nbsp;&rarr;
+        </a>
+
+        <p class="cta-footnote reveal">
+            This page is intended for clinical colleagues, partners, and accredited investors only.
+            This does not constitute an offer to sell or a solicitation of an offer to buy any securities.
+        </p>
+    </section>
+
+    <!-- ═══ FOOTER ══════════════════════════════════ -->
+    <footer>
+        <a href="#home" class="footer-logo">Metabolica</a>
+        <span class="footer-copy">&copy; 2026 Rallis Wellness Inc. &nbsp;&middot;&nbsp; Patent pending.</span>
+    </footer>
+
+    <!-- ═══ SCRIPTS ═════════════════════════════════ -->
+    <script>
+        /* Mobile menu */
+        const menuBtn    = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuBtn.addEventListener('click', () => {
+            const open = mobileMenu.classList.toggle('open');
+            menuBtn.setAttribute('aria-expanded', open);
+            const s = menuBtn.querySelectorAll('span');
+            if (open) {
+                s[0].style.transform = 'translateY(6.5px) rotate(45deg)';
+                s[1].style.opacity = '0';
+                s[2].style.transform = 'translateY(-6.5px) rotate(-45deg)';
+            } else {
+                s[0].style.transform = s[1].style.opacity = s[2].style.transform = '';
+            }
+        });
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('open');
+            menuBtn.setAttribute('aria-expanded', false);
+            const s = menuBtn.querySelectorAll('span');
+            s[0].style.transform = s[1].style.opacity = s[2].style.transform = '';
+        }
+
+        window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });
+
+        /* Scroll reveal */
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us — Metabolica</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nuosu+SIL&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Nuosu SIL';
+            src: local('Helvetica Neue'), local('Helvetica'), local('Arial');
+            unicode-range: U+0027, U+0060, U+00B4, U+2018, U+2019, U+201A, U+201B,
+                           U+201C, U+201D, U+201E, U+201F, U+2032, U+2033,
+                           U+2026, U+2025, U+22EF;
+        }
+    </style>
+
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --navy:       #153556;
+            --navy-dark:  #0d2238;
+            --navy-mid:   #1a4472;
+            --bg:         #F3F1ED;
+            --cream-card: #E8E2D6;
+            --white:      #FFFFFF;
+            --font-display: 'Nuosu SIL', Georgia, serif;
+            --font-body:    'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --nav-height:   64px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg);
+            color: var(--navy);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ═══════════════════════════════════════════
+           NAVIGATION  (identical to index.html)
+        ═══════════════════════════════════════════ */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 200;
+            height: var(--nav-height);
+            background: var(--bg);
+            border-bottom: 1px solid rgba(21, 53, 86, 0.10);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 3rem;
+        }
+
+        .nav-logo {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--navy);
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .nav-center {
+            display: flex;
+            align-items: center;
+            gap: 2.25rem;
+            list-style: none;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .nav-center a {
+            font-family: var(--font-body);
+            font-size: 0.78rem;
+            font-weight: 400;
+            color: var(--navy);
+            text-decoration: none;
+            letter-spacing: 0.01em;
+            transition: opacity 0.2s ease;
+        }
+
+        .nav-center a:hover { opacity: 0.45; }
+        .nav-center a.active { font-weight: 600; }
+
+        .nav-right { flex-shrink: 0; }
+
+        .nav-cta {
+            font-family: var(--font-body);
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--navy);
+            text-decoration: none;
+            letter-spacing: 0.01em;
+            transition: opacity 0.2s ease;
+        }
+
+        .nav-cta:hover { opacity: 0.45; }
+
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+            background: none;
+            border: none;
+        }
+
+        .nav-hamburger span {
+            display: block;
+            width: 22px;
+            height: 1.5px;
+            background: var(--navy);
+            border-radius: 2px;
+            transition: transform 0.25s, opacity 0.25s;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: var(--nav-height); left: 0; right: 0;
+            background: var(--bg);
+            border-bottom: 1px solid rgba(21, 53, 86, 0.10);
+            padding: 1.5rem 2rem;
+            z-index: 190;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .mobile-menu.open { display: flex; }
+
+        .mobile-menu a {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: var(--navy);
+            text-decoration: none;
+            padding: 0.25rem 0;
+            border-bottom: 1px solid rgba(21, 53, 86, 0.07);
+        }
+
+        /* ═══════════════════════════════════════════
+           SHARED UTILITIES
+        ═══════════════════════════════════════════ */
+        .eyebrow {
+            font-family: var(--font-body);
+            font-size: 0.62rem;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(21, 53, 86, 0.45);
+            display: block;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .reveal.visible { opacity: 1; transform: none; }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+
+        /* ═══════════════════════════════════════════
+           PAGE HEADER
+        ═══════════════════════════════════════════ */
+        .page-header {
+            padding-top: var(--nav-height);
+            padding-bottom: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .page-header-inner {
+            padding: 5.5rem 2rem 5rem;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .page-header .eyebrow {
+            margin-bottom: 1.25rem;
+        }
+
+        .page-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5.6vw, 6.5rem);
+            font-weight: 400;
+            line-height: 0.95;
+            letter-spacing: 0;
+            color: var(--navy);
+            margin-bottom: 1.75rem;
+        }
+
+        .page-subtitle {
+            font-family: var(--font-body);
+            font-size: clamp(0.82rem, 1.4vw, 0.95rem);
+            font-weight: 400;
+            line-height: 1.75;
+            color: rgba(21, 53, 86, 0.55);
+            max-width: 500px;
+            margin: 0 auto;
+            letter-spacing: 0.01em;
+        }
+
+        /* Thin rule beneath header */
+        .page-header-rule {
+            width: 100%;
+            height: 1px;
+            background: rgba(21, 53, 86, 0.10);
+        }
+
+        /* ═══════════════════════════════════════════
+           TEAM SECTION
+        ═══════════════════════════════════════════ */
+        .team-section {
+            width: 100%;
+            max-width: 1060px;
+            margin: 0 auto;
+            padding: 0 2rem 8rem;
+        }
+
+        /* Each member profile */
+        .member {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 5rem;
+            align-items: start;
+            padding: 6rem 0;
+            border-bottom: 1px solid rgba(21, 53, 86, 0.08);
+        }
+
+        .member:last-child {
+            border-bottom: none;
+        }
+
+        /* Photo column */
+        .member-photo-col {
+            position: sticky;
+            top: calc(var(--nav-height) + 2rem);
+        }
+
+        .member-photo {
+            border-radius: 0.875rem;
+            overflow: hidden;
+            background: linear-gradient(145deg, #C8D4E0 0%, #A8BDD0 100%);
+            aspect-ratio: 3 / 4;
+            width: 100%;
+        }
+
+        .member-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+        }
+
+        .member-photo-caption {
+            margin-top: 1.25rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid rgba(21, 53, 86, 0.10);
+        }
+
+        .member-name {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            font-weight: 400;
+            line-height: 1.15;
+            letter-spacing: 0;
+            color: var(--navy);
+            margin-bottom: 0.4rem;
+        }
+
+        .member-title {
+            font-family: var(--font-body);
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(21, 53, 86, 0.45);
+            line-height: 1.5;
+        }
+
+        /* Bio column */
+        .member-bio-col {
+            padding-top: 0.25rem; /* optical alignment with photo top */
+        }
+
+        .member-credential {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-body);
+            font-size: 0.62rem;
+            font-weight: 500;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: rgba(21, 53, 86, 0.4);
+            margin-bottom: 2rem;
+        }
+
+        .member-credential::before {
+            content: '';
+            display: block;
+            width: 24px;
+            height: 1px;
+            background: rgba(21, 53, 86, 0.25);
+        }
+
+        .member-bio-headline {
+            font-family: var(--font-display);
+            font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+            font-weight: 400;
+            line-height: 1.3;
+            letter-spacing: 0;
+            color: var(--navy);
+            margin-bottom: 1.75rem;
+        }
+
+        .member-bio-headline em { font-style: italic; }
+
+        .member-bio p {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 400;
+            line-height: 1.85;
+            color: rgba(21, 53, 86, 0.65);
+            margin-bottom: 1.1rem;
+        }
+
+        .member-bio p:last-child { margin-bottom: 0; }
+
+        .member-bio strong {
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        /* Highlight pull-quote within bio */
+        .member-highlight {
+            font-family: var(--font-display);
+            font-size: clamp(1rem, 1.6vw, 1.2rem);
+            font-weight: 400;
+            font-style: italic;
+            letter-spacing: 0;
+            color: var(--navy);
+            line-height: 1.5;
+            padding: 1.5rem 0 1.5rem 1.25rem;
+            border-left: 2px solid rgba(21, 53, 86, 0.25);
+            margin: 1.75rem 0;
+        }
+
+        /* ═══════════════════════════════════════════
+           BOTTOM CTA STRIP
+        ═══════════════════════════════════════════ */
+        .about-cta {
+            width: 100%;
+            background: var(--navy);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+
+        .about-cta .eyebrow {
+            color: rgba(255,255,255,0.35);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-cta-headline {
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 3.5vw, 3rem);
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: 0;
+            color: var(--white);
+            max-width: 600px;
+            margin-bottom: 0.75rem;
+        }
+
+        .about-cta-sub {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.38);
+            margin-bottom: 2.75rem;
+        }
+
+        .btn-light {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            background: var(--white);
+            color: var(--navy);
+            text-decoration: none;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            padding: 0.9rem 2.25rem;
+            border-radius: 100px;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+        }
+
+        .btn-light:hover {
+            background: #e8f0f8;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+        }
+
+        /* ═══════════════════════════════════════════
+           FOOTER
+        ═══════════════════════════════════════════ */
+        footer {
+            background: var(--navy-dark);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.75rem 3rem;
+        }
+
+        .footer-logo {
+            font-family: var(--font-body);
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.3);
+            text-decoration: none;
+        }
+
+        .footer-copy {
+            font-family: var(--font-body);
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.2);
+        }
+
+        /* ═══════════════════════════════════════════
+           RESPONSIVE — TABLET ≤ 900px
+        ═══════════════════════════════════════════ */
+        @media (max-width: 900px) {
+            nav { padding: 0 2rem; }
+            .nav-center { gap: 1.75rem; }
+
+            .member {
+                grid-template-columns: 260px 1fr;
+                gap: 3rem;
+                padding: 4rem 0;
+            }
+
+            .member-photo-col {
+                position: static; /* disable sticky on tablet */
+            }
+        }
+
+        /* ═══════════════════════════════════════════
+           RESPONSIVE — SMALL TABLET ≤ 768px
+        ═══════════════════════════════════════════ */
+        @media (max-width: 768px) {
+            nav { padding: 0 1.5rem; }
+            .nav-center { display: none; }
+            .nav-right .nav-cta { display: none; }
+            .nav-hamburger { display: flex; }
+
+            .page-header-inner { padding: 4rem 1.5rem 3.5rem; }
+
+            .team-section { padding: 0 1.5rem 6rem; }
+
+            .member {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 3.5rem 0;
+            }
+
+            .member-photo {
+                aspect-ratio: 4 / 3;
+                max-width: 400px;
+            }
+
+            .member-photo img {
+                object-position: center 20%;
+            }
+
+            .about-cta { padding: 5rem 1.5rem; }
+            footer { padding: 1.5rem; flex-direction: column; gap: 0.75rem; text-align: center; }
+        }
+
+        /* ═══════════════════════════════════════════
+           RESPONSIVE — MOBILE ≤ 480px
+        ═══════════════════════════════════════════ */
+        @media (max-width: 480px) {
+            nav { padding: 0 1.25rem; }
+            .page-header-inner { padding: 3rem 1.25rem 2.5rem; }
+            .team-section { padding: 0 1.25rem 5rem; }
+            .member { padding: 3rem 0; }
+            .about-cta { padding: 4rem 1.25rem; }
+            footer { padding: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ NAV ═══════════════════════════════════ -->
+    <nav>
+        <a href="index.html" class="nav-logo">Metabolica</a>
+
+        <ul class="nav-center">
+            <li><a href="about.html" class="active">About Us</a></li>
+            <li><a href="ingredients.html">Ingredients</a></li>
+            <li><a href="index.html#clinics">Clinics</a></li>
+        </ul>
+
+        <div class="nav-right">
+            <a href="mailto:s.rallis@gmail.com" class="nav-cta">Join Waitlist &nbsp;&rarr;</a>
+        </div>
+
+        <button class="nav-hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="about.html" onclick="closeMobileMenu()">About Us</a>
+        <a href="ingredients.html" onclick="closeMobileMenu()">Ingredients</a>
+        <a href="index.html#clinics" onclick="closeMobileMenu()">Clinics</a>
+        <a href="mailto:s.rallis@gmail.com">Join Waitlist &rarr;</a>
+    </div>
+
+    <!-- ═══ PAGE HEADER ════════════════════════════ -->
+    <header class="page-header">
+        <div class="page-header-inner">
+            <span class="eyebrow reveal">The People Behind Metabolica</span>
+            <h1 class="page-title reveal reveal-delay-1">About Us.</h1>
+            <p class="page-subtitle reveal reveal-delay-2">
+                Built by a family with decades of clinical experience, legal precision,
+                and a conviction that oncology nutrition has been underserved for too long.
+            </p>
+        </div>
+        <div class="page-header-rule"></div>
+    </header>
+
+    <!-- ═══ TEAM ═══════════════════════════════════ -->
+    <section class="team-section">
+
+        <!-- ── Dr. Steve Rallis ─────────────────── -->
+        <div class="member">
+
+            <div class="member-photo-col reveal">
+                <div class="member-photo">
+                    <!--
+                        Save your headshot to the images folder as: images/steve.jpg
+                    -->
+                    <img src="images/steve.jpg" alt="Dr. Steve Rallis DC, ND">
+                </div>
+                <div class="member-photo-caption">
+                    <p class="member-name">Dr. Steve Rallis</p>
+                    <p class="member-title">Founder &amp; Chief Medical Officer</p>
+                </div>
+            </div>
+
+            <div class="member-bio-col reveal reveal-delay-1">
+                <span class="member-credential">DC, ND &nbsp;&middot;&nbsp; Integrative Oncology</span>
+
+                <h2 class="member-bio-headline">
+                    Clinician, educator, and the<br>
+                    <em>architect of Metabolica&rsquo;s formula.</em>
+                </h2>
+
+                <div class="member-bio">
+                    <p>
+                        Dr. Steve Rallis is an integrative oncology practitioner focused on metabolic
+                        approaches to cancer care. As Chief Medical Officer of <strong>The DRIPBaR Canada</strong>,
+                        he has worked with thousands of patients navigating complex chronic illness and
+                        cancer treatment, with a focus on improving resilience, recovery, and quality of life.
+                    </p>
+
+                    <div class="member-highlight">
+                        Dual clinical doctorates in chiropractic (DC) and naturopathic medicine (ND)
+                        &mdash; a rare combination that allows him to approach complex disease from both
+                        structural and metabolic perspectives.
+                    </div>
+
+                    <p>
+                        His clinical work centres on high-dose IV vitamin C, metabolic therapies,
+                        and precision nutrition strategies designed to support patients without
+                        unintentionally fueling disease processes. He is the author of
+                        <strong><em>When Oranges Become Apples: What Your Oncologist Won&rsquo;t Tell You
+                        About IV Vitamin C and Cancer</em></strong> and a frequent speaker at international
+                        medical conferences.
+                    </p>
+                    <p>
+                        Metabolica was born directly from his clinical experience: seeing patients who
+                        needed better nutritional tools, but had none designed for their biology.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ── Nick Rallis ──────────────────────── -->
+        <div class="member">
+
+            <div class="member-photo-col reveal">
+                <div class="member-photo" style="background: linear-gradient(145deg, #C2CEDB 0%, #A4B8CC 100%);">
+                    <!--
+                        Save your headshot to the images folder as: images/nick.jpg
+                    -->
+                    <img src="images/nick.jpg" alt="Nick Rallis">
+                </div>
+                <div class="member-photo-caption">
+                    <p class="member-name">Nick Rallis</p>
+                    <p class="member-title">Operations, Legal &amp; Finance</p>
+                </div>
+            </div>
+
+            <div class="member-bio-col reveal reveal-delay-1">
+                <span class="member-credential">Queen&rsquo;s Commerce &amp; Queen&rsquo;s Law &nbsp;&middot;&nbsp; Bennett Jones</span>
+
+                <h2 class="member-bio-headline">
+                    Building Metabolica with<br>
+                    <em>legal precision and operational discipline.</em>
+                </h2>
+
+                <div class="member-bio">
+                    <p>
+                        Nick Rallis brings a dual background in <strong>Queen&rsquo;s University Commerce</strong>
+                        and <strong>Queen&rsquo;s University Faculty of Law</strong>, giving him a rare
+                        combination of financial, legal, and operational fluency. He works at the
+                        intersection of structure and execution, ensuring that Metabolica is built to
+                        scale within a complex regulatory environment.
+                    </p>
+
+                    <div class="member-highlight">
+                        Currently with <em>Bennett Jones</em> &mdash; one of Canada&rsquo;s leading
+                        business law firms &mdash; where he is exposed to complex transactions,
+                        regulatory frameworks, and high-level corporate strategy.
+                    </div>
+
+                    <p>
+                        He has led coordination across legal counsel, formulation teams, and manufacturing
+                        partners, translating strategy into concrete action. His strengths lie in
+                        financial modelling, regulatory alignment, and operational discipline, bringing
+                        clarity and order to an otherwise complex build.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ── Marcus Rallis ────────────────────── -->
+        <div class="member">
+
+            <div class="member-photo-col reveal">
+                <div class="member-photo" style="background: linear-gradient(145deg, #BEC9D6 0%, #9EAFC2 100%);">
+                    <!--
+                        Save your headshot to the images folder as: images/marcus.jpg
+                    -->
+                    <img src="images/marcus.jpg" alt="Marcus Rallis">
+                </div>
+                <div class="member-photo-caption">
+                    <p class="member-name">Marcus Rallis</p>
+                    <p class="member-title">Brand, Growth &amp; A.I.</p>
+                </div>
+            </div>
+
+            <div class="member-bio-col reveal reveal-delay-1">
+                <span class="member-credential">University of Waterloo &nbsp;&middot;&nbsp; Global Business &amp; Digital Arts</span>
+
+                <h2 class="member-bio-headline">
+                    Translating clinical science into<br>
+                    <em>a brand that practitioners trust.</em>
+                </h2>
+
+                <div class="member-bio">
+                    <p>
+                        Marcus Rallis is completing his undergraduate degree at the
+                        <strong>University of Waterloo</strong> in Global Business and Digital Arts,
+                        where he has developed a multidisciplinary approach to building modern brands.
+                    </p>
+
+                    <div class="member-highlight">
+                        He leads branding, design, and AI-driven systems at Metabolica &mdash;
+                        shaping how the company communicates, scales, and operates.
+                    </div>
+
+                    <p>
+                        From visual identity to digital infrastructure, his focus is on creating a brand
+                        that is both clinically credible and commercially compelling. He drives
+                        partnerships with clinics, builds distribution channels, and develops the
+                        company&rsquo;s digital presence.
+                    </p>
+                    <p>
+                        His work ensures that complex scientific ideas are translated into clear,
+                        compelling narratives that resonate with practitioners, patients, and investors.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ═══ BOTTOM CTA ═════════════════════════════ -->
+    <div class="about-cta">
+        <span class="eyebrow">The Opportunity</span>
+        <h2 class="about-cta-headline reveal">
+            Become a Founding Clinical Partner.
+        </h2>
+        <p class="about-cta-sub reveal">
+            5 exclusive seats &nbsp;&middot;&nbsp; $50,000 per partner &nbsp;&middot;&nbsp; $250,000 total raise
+        </p>
+        <a href="mailto:s.rallis@gmail.com?subject=Founding Clinical Partner — Metabolica&body=Hi Dr. Rallis, I am interested in learning more about the Founding Clinical Partner opportunity."
+           class="btn-light reveal">
+            Express Interest &nbsp;&rarr;
+        </a>
+    </div>
+
+    <!-- ═══ FOOTER ══════════════════════════════════ -->
+    <footer>
+        <a href="index.html" class="footer-logo">Metabolica</a>
+        <span class="footer-copy">&copy; 2026 Rallis Wellness Inc. &nbsp;&middot;&nbsp; Patent pending.</span>
+    </footer>
+
+    <!-- ═══ SCRIPTS ═════════════════════════════════ -->
+    <script>
+        /* Mobile menu */
+        const menuBtn    = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuBtn.addEventListener('click', () => {
+            const open = mobileMenu.classList.toggle('open');
+            menuBtn.setAttribute('aria-expanded', open);
+            const s = menuBtn.querySelectorAll('span');
+            if (open) {
+                s[0].style.transform = 'translateY(6.5px) rotate(45deg)';
+                s[1].style.opacity   = '0';
+                s[2].style.transform = 'translateY(-6.5px) rotate(-45deg)';
+            } else {
+                s[0].style.transform = s[1].style.opacity = s[2].style.transform = '';
+            }
+        });
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('open');
+            menuBtn.setAttribute('aria-expanded', false);
+            const s = menuBtn.querySelectorAll('span');
+            s[0].style.transform = s[1].style.opacity = s[2].style.transform = '';
+        }
+
+        window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });
+
+        /* Scroll reveal */
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+            });
+        }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>
