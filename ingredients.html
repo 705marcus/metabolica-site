@@ -697,19 +697,38 @@
                 gap: 1rem;
             }
 
+            /* ── Stats ── */
             .stats-section { padding: 3.5rem 1.25rem 4rem; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
+            .stat-card { padding: 1.5rem 1.25rem; }
 
+            /* ── Ingredients ── */
             .ingredients-section { padding: 0 1.25rem 4.5rem; }
 
-            .ingredient-detail {
-                padding-left: 0;
-            }
-            .ingredient-row.open .ingredient-detail {
-                padding-left: 0;
-            }
+            /* Remove left indent on expanded panel — not enough room on mobile */
+            .ingredient-detail { padding-left: 0; }
+            .ingredient-row.open .ingredient-detail { padding-left: 0; padding-bottom: 1.25rem; }
 
+            .ingredient-tag { min-width: 80px; }
+
+            /* ── Compare ── */
             .compare-section { padding: 4rem 1.25rem; }
+            /* Scroll hint gradient on right edge */
+            .compare-table-wrap {
+                position: relative;
+                -webkit-overflow-scrolling: touch;
+            }
+            .compare-table-wrap::after {
+                content: '';
+                position: absolute;
+                top: 0; right: 0; bottom: 0;
+                width: 28px;
+                background: linear-gradient(to right, transparent, rgba(13, 34, 56, 0.6));
+                pointer-events: none;
+                border-radius: 0 1rem 1rem 0;
+            }
+            .compare-table thead th,
+            .compare-table tbody td { padding: 0.85rem 1rem; font-size: 0.75rem; }
 
             footer { padding: 1.5rem; flex-direction: column; gap: 0.75rem; text-align: center; }
         }
@@ -718,11 +737,12 @@
             .stats-grid { grid-template-columns: 1fr; }
             .stat-value { font-size: clamp(2rem, 10vw, 2.75rem); }
 
-            .ingredient-tag { min-width: 72px; font-size: 0.52rem; }
+            .ingredient-tag { min-width: 70px; font-size: 0.52rem; padding: 0.25rem 0.55rem; }
             .ingredient-name { font-size: 0.82rem; }
+            .ingredient-desc { font-size: 0.78rem; }
 
             .compare-table tbody td,
-            .compare-table thead th { padding: 0.85rem 1rem; font-size: 0.75rem; }
+            .compare-table thead th { padding: 0.7rem 0.75rem; font-size: 0.7rem; }
         }
     </style>
 </head>
@@ -735,11 +755,10 @@
         <ul class="nav-center">
             <li><a href="about.html">About Us</a></li>
             <li><a href="ingredients.html" class="active">Ingredients</a></li>
-            <li><a href="index.html#clinics">Clinics</a></li>
         </ul>
 
         <div class="nav-right">
-            <a href="mailto:s.rallis@gmail.com" class="nav-cta">Join Waitlist &nbsp;&rarr;</a>
+            <a href="https://forms.gle/zAVjJA22gxrnW6DX8" class="nav-cta" target="_blank" rel="noopener noreferrer">Join Waitlist &nbsp;&rarr;</a>
         </div>
 
         <button class="nav-hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false">
@@ -750,8 +769,7 @@
     <div class="mobile-menu" id="mobileMenu">
         <a href="about.html" onclick="closeMobileMenu()">About Us</a>
         <a href="ingredients.html" onclick="closeMobileMenu()">Ingredients</a>
-        <a href="index.html#clinics" onclick="closeMobileMenu()">Clinics</a>
-        <a href="mailto:s.rallis@gmail.com">Join Waitlist &rarr;</a>
+        <a href="https://forms.gle/zAVjJA22gxrnW6DX8" target="_blank" rel="noopener noreferrer" onclick="closeMobileMenu()">Join Waitlist &rarr;</a>
     </div>
 
     <!-- ═══ PAGE HEADER ═══════════════════════════ -->

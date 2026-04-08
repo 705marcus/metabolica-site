@@ -482,24 +482,42 @@
 
             .page-header-inner { padding: 4rem 1.5rem 3.5rem; }
 
-            .team-section { padding: 0 1.5rem 6rem; }
+            .team-section { padding: 0 1.5rem 5rem; }
 
             .member {
                 grid-template-columns: 1fr;
-                gap: 2rem;
+                gap: 1.75rem;
                 padding: 3.5rem 0;
             }
 
+            /* Compact portrait — keeps the full subject visible */
             .member-photo {
-                aspect-ratio: 4 / 3;
-                max-width: 400px;
+                aspect-ratio: 3 / 4;
+                width: 150px;
+                max-width: 150px;
             }
 
             .member-photo img {
-                object-position: center 20%;
+                object-position: center top;
             }
 
-            .about-cta { padding: 5rem 1.5rem; }
+            /* Name + title sit comfortably below the small photo */
+            .member-photo-caption {
+                margin-top: 0.85rem;
+                padding-top: 0.85rem;
+            }
+
+            .member-name  { font-size: 1.1rem; }
+            .member-title { font-size: 0.65rem; }
+
+            /* Credential + bio headline get a bit more breathing room */
+            .member-credential { margin-bottom: 1.25rem; }
+            .member-bio-headline { font-size: clamp(1.2rem, 4.5vw, 1.5rem); }
+
+            /* Pull-quote indent reduced */
+            .member-highlight { padding-left: 1rem; }
+
+            .about-cta { padding: 4.5rem 1.5rem; }
             footer { padding: 1.5rem; flex-direction: column; gap: 0.75rem; text-align: center; }
         }
 
@@ -509,9 +527,19 @@
         @media (max-width: 480px) {
             nav { padding: 0 1.25rem; }
             .page-header-inner { padding: 3rem 1.25rem 2.5rem; }
-            .team-section { padding: 0 1.25rem 5rem; }
-            .member { padding: 3rem 0; }
-            .about-cta { padding: 4rem 1.25rem; }
+            .team-section { padding: 0 1.25rem 4rem; }
+
+            .member { padding: 2.5rem 0; gap: 1.5rem; }
+
+            .member-photo {
+                width: 120px;
+                max-width: 120px;
+            }
+
+            .member-bio p { font-size: 0.84rem; line-height: 1.8; }
+
+            .about-cta { padding: 3.5rem 1.25rem; }
+            .about-cta-headline { font-size: clamp(1.5rem, 6vw, 2rem); }
             footer { padding: 1.25rem; }
         }
     </style>
@@ -525,11 +553,10 @@
         <ul class="nav-center">
             <li><a href="about.html" class="active">About Us</a></li>
             <li><a href="ingredients.html">Ingredients</a></li>
-            <li><a href="index.html#clinics">Clinics</a></li>
         </ul>
 
         <div class="nav-right">
-            <a href="mailto:s.rallis@gmail.com" class="nav-cta">Join Waitlist &nbsp;&rarr;</a>
+            <a href="https://forms.gle/zAVjJA22gxrnW6DX8" class="nav-cta" target="_blank" rel="noopener noreferrer">Join Waitlist &nbsp;&rarr;</a>
         </div>
 
         <button class="nav-hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false">
@@ -540,8 +567,7 @@
     <div class="mobile-menu" id="mobileMenu">
         <a href="about.html" onclick="closeMobileMenu()">About Us</a>
         <a href="ingredients.html" onclick="closeMobileMenu()">Ingredients</a>
-        <a href="index.html#clinics" onclick="closeMobileMenu()">Clinics</a>
-        <a href="mailto:s.rallis@gmail.com">Join Waitlist &rarr;</a>
+        <a href="https://forms.gle/zAVjJA22gxrnW6DX8" target="_blank" rel="noopener noreferrer" onclick="closeMobileMenu()">Join Waitlist &rarr;</a>
     </div>
 
     <!-- ═══ PAGE HEADER ════════════════════════════ -->

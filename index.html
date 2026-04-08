@@ -801,7 +801,7 @@
 
         .cta-card {
             border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 0.875rem;
+            border-radius: 0;
             padding: 2.5rem 2rem;
             display: flex;
             flex-direction: column;
@@ -817,7 +817,7 @@
             bottom: 0; left: 0; right: 0;
             height: 2px;
             background: rgba(255,255,255,0.08);
-            border-radius: 0 0 0.875rem 0.875rem;
+            border-radius: 0;
         }
 
         .cta-card-number {
@@ -924,10 +924,12 @@
 
             .story-part {
                 grid-template-columns: 1fr;
-                gap: 2.5rem;
+                gap: 2rem;
             }
             .story-part.reverse { direction: ltr; }
-            .story-photo { aspect-ratio: 4 / 3; }
+
+            /* Portrait story photo becomes a capped landscape on tablet */
+            .story-photo { aspect-ratio: 4 / 3; max-width: 560px; }
 
             .pillars-grid { grid-template-columns: repeat(2, 1fr); }
             .cta-cards { grid-template-columns: 1fr; max-width: 400px; }
@@ -942,23 +944,62 @@
             .nav-right .nav-cta { display: none; }
             .nav-hamburger { display: flex; }
 
+            /* ── Hero ── */
             .hero-top { padding: 3rem 1.5rem 0; }
-            /* On small screens let headline wrap naturally */
             .hero-headline {
                 white-space: normal;
                 font-size: clamp(2.25rem, 10vw, 5rem);
             }
-            .hero-sub { font-size: 0.85rem; }
+            .hero-sub { font-size: 0.85rem; max-width: 340px; }
             .product-wrap { padding: 2.5rem 1rem 0; }
             .product-container { border-radius: 1rem; aspect-ratio: 4/3; }
 
-            .copy-section { padding: 3.5rem 1.5rem 4rem; }
+            /* ── Mission ── */
+            .mission-section { padding: 5rem 1.5rem; }
+            .mission-wordmark { max-width: 160px; }
+            .mission-statement { font-size: clamp(1.1rem, 4vw, 1.4rem); }
+
+            /* ── Story ── */
             .story-section { padding: 4rem 1.5rem; }
-            .story-intro { margin-bottom: 1.75rem; }
+            .story-intro { margin-bottom: 1.5rem; }
+            .story-intro-headline { font-size: clamp(1.75rem, 6vw, 2.5rem); }
+
+            /* Story photo: compact on mobile, full width with square-ish ratio */
+            .story-photo { aspect-ratio: 4 / 3; max-width: 100%; border-radius: 0.75rem; }
+            .story-photo.landscape { aspect-ratio: 16 / 9; }
+
+            /* ── Science callout ── */
+            .science-callout { padding: 5rem 1.5rem; }
+            .science-headline { font-size: clamp(1.75rem, 6vw, 2.5rem); }
+            .science-sub { font-size: 0.85rem; }
+
+            /* ── Pillars ── */
             .pillars-section { padding: 5rem 1.5rem; }
             .pillars-grid { grid-template-columns: 1fr; gap: 1rem; }
+
+            /* ── Compare table ── */
             .compare-section { padding: 0 1.5rem 5rem; }
+            /* Allow horizontal scroll and show a hint shadow on the right */
+            .compare-table-wrap {
+                position: relative;
+                -webkit-overflow-scrolling: touch;
+            }
+            .compare-table-wrap::after {
+                content: '';
+                position: absolute;
+                top: 0; right: 0; bottom: 0;
+                width: 32px;
+                background: linear-gradient(to right, transparent, rgba(243,241,237,0.85));
+                pointer-events: none;
+                border-radius: 0 0.5rem 0.5rem 0;
+            }
+            table.compare td,
+            table.compare thead th { padding: 0.85rem 1rem; font-size: 0.75rem; }
+
+            /* ── CTA ── */
             .cta-section { padding: 5rem 1.5rem; }
+            .cta-headline { font-size: clamp(1.75rem, 6vw, 2.5rem); }
+
             footer { padding: 1.5rem; flex-direction: column; gap: 0.75rem; text-align: center; }
         }
 
@@ -967,17 +1008,33 @@
         ═══════════════════════════════════════════ */
         @media (max-width: 480px) {
             nav { padding: 0 1.25rem; }
+
+            /* ── Hero ── */
             .hero-top { padding: 2.5rem 1.25rem 0; }
             .hero-headline { font-size: clamp(2rem, 12vw, 3.5rem); }
             .product-wrap { padding: 2rem 0.75rem 0; }
             .product-container { border-radius: 0.875rem; }
 
-            .copy-section { padding: 3rem 1.25rem 3.5rem; }
+            /* ── Story ── */
             .story-section { padding: 3.5rem 1.25rem; }
+            .story-body { font-size: 0.84rem; }
+
+            /* ── Science ── */
             .science-callout { padding: 4.5rem 1.25rem; }
+
+            /* ── Pillars ── */
             .pillars-section { padding: 4rem 1.25rem; }
+            .pillar-card { padding: 1.75rem 1.25rem; }
+
+            /* ── Compare ── */
             .compare-section { padding: 0 1.25rem 4rem; }
+            table.compare td,
+            table.compare thead th { padding: 0.7rem 0.75rem; font-size: 0.7rem; }
+
+            /* ── CTA ── */
             .cta-section { padding: 4rem 1.25rem; }
+            .cta-card { padding: 2rem 1.5rem; }
+            .cta-card-number { font-size: clamp(2rem, 10vw, 3rem); }
         }
     </style>
 </head>
@@ -990,11 +1047,10 @@
         <ul class="nav-center">
             <li><a href="about.html">About Us</a></li>
             <li><a href="ingredients.html">Ingredients</a></li>
-            <li><a href="#clinics">Clinics</a></li>
         </ul>
 
         <div class="nav-right">
-            <a href="mailto:s.rallis@gmail.com" class="nav-cta">Join Waitlist &nbsp;&rarr;</a>
+            <a href="https://forms.gle/zAVjJA22gxrnW6DX8" class="nav-cta" target="_blank" rel="noopener noreferrer">Join Waitlist &nbsp;&rarr;</a>
         </div>
 
         <button class="nav-hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false">
@@ -1005,14 +1061,13 @@
     <div class="mobile-menu" id="mobileMenu">
         <a href="about.html" onclick="closeMobileMenu()">About Us</a>
         <a href="ingredients.html" onclick="closeMobileMenu()">Ingredients</a>
-        <a href="#clinics" onclick="closeMobileMenu()">Clinics</a>
-        <a href="mailto:s.rallis@gmail.com">Join Waitlist &rarr;</a>
+        <a href="https://forms.gle/zAVjJA22gxrnW6DX8" target="_blank" rel="noopener noreferrer" onclick="closeMobileMenu()">Join Waitlist &rarr;</a>
     </div>
 
     <!-- ═══ HERO ═══════════════════════════════════ -->
     <section class="hero" id="home">
         <div class="hero-top">
-            <a href="mailto:s.rallis@gmail.com" class="funding-banner">
+            <a href="#partner" class="funding-banner">
                 Metabolica Pre&#8209;Series A Funding &nbsp;&rarr;
             </a>
 
@@ -1023,7 +1078,7 @@
                 of <em>cancer patients undergoing treatment or recovery.</em>
             </p>
 
-            <a href="mailto:s.rallis@gmail.com" class="btn-primary">
+            <a href="https://forms.gle/zAVjJA22gxrnW6DX8" class="btn-primary" target="_blank" rel="noopener noreferrer">
                 Join Patient Waitlist &nbsp;&rarr;
             </a>
         </div>
@@ -1243,13 +1298,13 @@
             </div>
             <div class="cta-card reveal reveal-delay-3">
                 <span class="cta-card-number">$45</span>
-                <span class="cta-card-label">Per Unit &ndash; Always</span>
+                <span class="cta-card-label">Per Unit *</span>
                 <div class="cta-card-divider"></div>
-                <p class="cta-card-desc">Perpetual access to the lowest wholesale price tier &mdash; <strong>no minimum order requirement, ever.</strong> Order 1 unit or 1,000 at the same rate.</p>
+                <p class="cta-card-desc">Perpetual access to the lowest wholesale price tier &mdash; with no minimum order requirement, ever. Order 1 unit or 1,000 at the same rate.</p>
             </div>
         </div>
 
-        <a href="mailto:s.rallis@gmail.com?subject=Founding Clinical Partner — Metabolica&body=Hi Dr. Rallis, I'm interested in learning more about the Founding Clinical Partner opportunity." class="btn-light reveal">
+        <a href="https://forms.gle/kNnPLzeSsMcnWaS38" class="btn-light reveal" target="_blank" rel="noopener noreferrer">
             Express Interest &nbsp;&rarr;
         </a>
 
