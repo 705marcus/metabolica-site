@@ -928,8 +928,9 @@
             }
             .story-part.reverse { direction: ltr; }
 
-            /* Portrait story photo becomes a capped landscape on tablet */
-            .story-photo { aspect-ratio: 4 / 3; max-width: 560px; }
+            /* Dr. Rallis portrait stays portrait on tablet; cap width */
+            .story-photo { max-width: 560px; }
+            .story-photo.landscape { aspect-ratio: 4 / 3; }
 
             .pillars-grid { grid-template-columns: repeat(2, 1fr); }
             .cta-cards { grid-template-columns: 1fr; max-width: 400px; }
@@ -964,8 +965,8 @@
             .story-intro { margin-bottom: 1.5rem; }
             .story-intro-headline { font-size: clamp(1.75rem, 6vw, 2.5rem); }
 
-            /* Story photo: compact on mobile, full width with square-ish ratio */
-            .story-photo { aspect-ratio: 4 / 3; max-width: 100%; border-radius: 0.75rem; }
+            /* Story photo: Dr. Rallis stays portrait on mobile; lifestyle photo stays landscape */
+            .story-photo { max-width: 100%; border-radius: 0.75rem; }
             .story-photo.landscape { aspect-ratio: 16 / 9; }
 
             /* ── Science callout ── */
