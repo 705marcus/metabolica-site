@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join the Waitlist — Metabolica</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nuosu+SIL&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Nuosu SIL';
+            src: local('Helvetica Neue'), local('Helvetica'), local('Arial');
+            unicode-range: U+0027, U+0060, U+00B4, U+2018, U+2019, U+201A, U+201B,
+                           U+201C, U+201D, U+201E, U+201F, U+2032, U+2033,
+                           U+2026, U+2025, U+22EF;
+        }
+    </style>
+
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --navy:       #153556;
+            --navy-dark:  #0d2238;
+            --navy-mid:   #1a4472;
+            --bg:         #F3F1ED;
+            --cream-card: #E8E2D6;
+            --white:      #FFFFFF;
+            --font-display: 'Nuosu SIL', Georgia, serif;
+            --font-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --nav-height: 64px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg);
+            color: var(--navy);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ═══════════════════════════════════════════
+           NAVIGATION
+        ═══════════════════════════════════════════ */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 200;
+            height: var(--nav-height);
+            background: var(--bg);
+            border-bottom: 1px solid rgba(21, 53, 86, 0.10);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 3rem;
+        }
+
+        .nav-logo {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--navy);
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .nav-center {
+            display: flex;
+            align-items: center;
+            gap: 2.25rem;
+            list-style: none;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .nav-center a {
+            font-family: var(--font-body);
+            font-size: 0.78rem;
+            font-weight: 400;
+            color: var(--navy);
+            text-decoration: none;
+            letter-spacing: 0.01em;
+            transition: opacity 0.2s ease;
+        }
+
+        .nav-center a:hover { opacity: 0.45; }
+
+        .nav-right { flex-shrink: 0; }
+
+        .nav-back {
+            font-family: var(--font-body);
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--navy);
+            text-decoration: none;
+            letter-spacing: 0.01em;
+            transition: opacity 0.2s ease;
+        }
+
+        .nav-back:hover { opacity: 0.45; }
+
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+            background: none;
+            border: none;
+        }
+
+        .nav-hamburger span {
+            display: block;
+            width: 22px;
+            height: 1.5px;
+            background: var(--navy);
+            border-radius: 2px;
+            transition: transform 0.25s, opacity 0.25s;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: var(--nav-height); left: 0; right: 0;
+            background: var(--bg);
+            border-bottom: 1px solid rgba(21, 53, 86, 0.10);
+            padding: 1.5rem 2rem;
+            z-index: 190;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .mobile-menu.open { display: flex; }
+
+        .mobile-menu a {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--navy);
+            text-decoration: none;
+            padding: 0.25rem 0;
+            border-bottom: 1px solid rgba(21, 53, 86, 0.07);
+        }
+
+        /* ═══════════════════════════════════════════
+           UTILITIES
+        ═══════════════════════════════════════════ */
+        .eyebrow {
+            font-family: var(--font-body);
+            font-size: 0.62rem;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(21, 53, 86, 0.45);
+            display: block;
+        }
+
+        /* ═══════════════════════════════════════════
+           MAIN LAYOUT
+        ═══════════════════════════════════════════ */
+        main {
+            flex: 1;
+            padding-top: var(--nav-height);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 5rem;
+        }
+
+        .waitlist-wrap {
+            width: 100%;
+            max-width: 520px;
+            padding: 5rem 2rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* ═══════════════════════════════════════════
+           HEADER
+        ═══════════════════════════════════════════ */
+        .form-eyebrow {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-headline {
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-size: clamp(2.2rem, 5vw, 3.4rem);
+            line-height: 1.05;
+            color: var(--navy);
+            margin-bottom: 1.1rem;
+        }
+
+        .form-sub {
+            font-family: var(--font-body);
+            font-size: 0.88rem;
+            font-weight: 400;
+            line-height: 1.75;
+            color: rgba(21, 53, 86, 0.60);
+            max-width: 380px;
+            margin: 0 auto 3rem;
+            letter-spacing: 0.01em;
+        }
+
+        /* ═══════════════════════════════════════════
+           FORM CARD
+        ═══════════════════════════════════════════ */
+        .form-card {
+            width: 100%;
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2.75rem 2.5rem;
+            box-shadow:
+                0 1px 2px rgba(21, 53, 86, 0.04),
+                0 4px 16px rgba(21, 53, 86, 0.08),
+                0 12px 40px rgba(21, 53, 86, 0.06);
+        }
+
+        /* ═══════════════════════════════════════════
+           FORM FIELDS
+        ═══════════════════════════════════════════ */
+        .field-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            text-align: left;
+            margin-bottom: 1rem;
+        }
+
+        .field:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .field label {
+            font-family: var(--font-body);
+            font-size: 0.62rem;
+            font-weight: 500;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(21, 53, 86, 0.50);
+        }
+
+        .field input {
+            font-family: var(--font-body);
+            font-size: 0.92rem;
+            font-weight: 400;
+            color: var(--navy);
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(21, 53, 86, 0.18);
+            padding: 0.6rem 0 0.55rem;
+            outline: none;
+            width: 100%;
+            transition: border-color 0.2s ease;
+            -webkit-appearance: none;
+            border-radius: 0;
+        }
+
+        .field input::placeholder {
+            color: rgba(21, 53, 86, 0.25);
+        }
+
+        .field input:focus {
+            border-bottom-color: var(--navy);
+        }
+
+        /* Phone field with flag prefix */
+        .phone-wrap {
+            display: flex;
+            align-items: flex-end;
+            gap: 0.5rem;
+        }
+
+        .phone-prefix {
+            font-family: var(--font-body);
+            font-size: 0.92rem;
+            font-weight: 400;
+            color: rgba(21, 53, 86, 0.40);
+            border-bottom: 1px solid rgba(21, 53, 86, 0.18);
+            padding: 0.6rem 0 0.55rem;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+
+        .phone-wrap input {
+            border-bottom: 1px solid rgba(21, 53, 86, 0.18);
+        }
+
+        .phone-wrap input:focus {
+            border-bottom-color: var(--navy);
+        }
+
+        /* Divider between name row and email/phone */
+        .field-divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(21, 53, 86, 0.07);
+            margin: 1.5rem 0;
+        }
+
+        /* ═══════════════════════════════════════════
+           SUBMIT BUTTON
+        ═══════════════════════════════════════════ */
+        .btn-submit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+            width: 100%;
+            background: var(--navy);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 1rem 2rem;
+            border-radius: 100px;
+            margin-top: 2rem;
+            transition: background 0.22s, transform 0.15s, box-shadow 0.22s;
+            box-shadow: 0 2px 12px rgba(21, 53, 86, 0.18);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit:hover {
+            background: var(--navy-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(21, 53, 86, 0.25);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Loading spinner inside button */
+        .spinner {
+            display: none;
+            width: 14px;
+            height: 14px;
+            border: 1.5px solid rgba(255,255,255,0.35);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ═══════════════════════════════════════════
+           CONSENT / FOOTNOTE
+        ═══════════════════════════════════════════ */
+        .form-footnote {
+            font-family: var(--font-body);
+            font-size: 0.68rem;
+            font-weight: 400;
+            color: rgba(21, 53, 86, 0.38);
+            line-height: 1.6;
+            text-align: center;
+            margin-top: 1.25rem;
+            letter-spacing: 0.01em;
+        }
+
+        /* ═══════════════════════════════════════════
+           SUCCESS STATE
+        ═══════════════════════════════════════════ */
+        .success-state {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 0.5rem 0;
+        }
+
+        .success-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(21, 53, 86, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .success-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--navy);
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .success-headline {
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-size: 1.6rem;
+            color: var(--navy);
+            margin-bottom: 0.75rem;
+        }
+
+        .success-body {
+            font-family: var(--font-body);
+            font-size: 0.88rem;
+            color: rgba(21, 53, 86, 0.60);
+            line-height: 1.7;
+            max-width: 320px;
+        }
+
+        /* ═══════════════════════════════════════════
+           ERROR MESSAGE
+        ═══════════════════════════════════════════ */
+        .form-error {
+            display: none;
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            color: #b04040;
+            text-align: center;
+            margin-top: 0.75rem;
+            letter-spacing: 0.01em;
+        }
+
+        /* ═══════════════════════════════════════════
+           FOOTER
+        ═══════════════════════════════════════════ */
+        footer {
+            padding: 2.5rem 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid rgba(21, 53, 86, 0.08);
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .footer-logo {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--navy);
+            text-decoration: none;
+        }
+
+        .footer-copy {
+            font-family: var(--font-body);
+            font-size: 0.72rem;
+            color: rgba(21, 53, 86, 0.40);
+            letter-spacing: 0.01em;
+        }
+
+        /* ═══════════════════════════════════════════
+           RESPONSIVE
+        ═══════════════════════════════════════════ */
+        @media (max-width: 768px) {
+            nav { padding: 0 1.5rem; }
+            .nav-center { display: none; }
+            .nav-hamburger { display: flex; }
+
+            .waitlist-wrap { padding: 3.5rem 1.25rem 0; }
+            .form-card { padding: 2rem 1.5rem; }
+            .field-row { grid-template-columns: 1fr; gap: 0; }
+            footer { padding: 2rem 1.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            .form-headline { font-size: clamp(2rem, 9vw, 2.4rem); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ NAV ═══════════════════════════════════ -->
+    <nav>
+        <a href="index.html" class="nav-logo">Metabolica</a>
+
+        <ul class="nav-center">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="ingredients.html">Ingredients</a></li>
+        </ul>
+
+        <div class="nav-right">
+            <a href="index.html" class="nav-back">&larr; &nbsp;Back</a>
+        </div>
+
+        <button class="nav-hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="about.html" onclick="closeMobileMenu()">About Us</a>
+        <a href="ingredients.html" onclick="closeMobileMenu()">Ingredients</a>
+        <a href="index.html" onclick="closeMobileMenu()">&larr; Back to Home</a>
+    </div>
+
+    <!-- ═══ MAIN ═══════════════════════════════════ -->
+    <main>
+        <div class="waitlist-wrap">
+
+            <span class="eyebrow form-eyebrow">Patient Waitlist</span>
+
+            <h1 class="form-headline">Reserve your place.</h1>
+
+            <p class="form-sub">
+                Be among the first to access Metabolica when we launch.
+                We'll be in touch with early access details and clinical updates.
+            </p>
+
+            <!-- Form card -->
+            <div class="form-card">
+
+                <!-- Default: form -->
+                <form id="waitlistForm" novalidate>
+
+                    <!-- Name row -->
+                    <div class="field-row">
+                        <div class="field">
+                            <label for="firstName">First Name</label>
+                            <input
+                                type="text"
+                                id="firstName"
+                                name="firstName"
+                                placeholder="Jane"
+                                autocomplete="given-name"
+                                required
+                            >
+                        </div>
+                        <div class="field">
+                            <label for="lastName">Last Name</label>
+                            <input
+                                type="text"
+                                id="lastName"
+                                name="lastName"
+                                placeholder="Smith"
+                                autocomplete="family-name"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="field-divider"></div>
+
+                    <!-- Email -->
+                    <div class="field">
+                        <label for="email">Email Address</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="jane@example.com"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+
+                    <div class="field-divider"></div>
+
+                    <!-- Phone -->
+                    <div class="field">
+                        <label for="phone">Phone Number</label>
+                        <div class="phone-wrap">
+                            <span class="phone-prefix">+1</span>
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                placeholder="(555) 000-0000"
+                                autocomplete="tel"
+                            >
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        <span id="btnLabel">Join the Waitlist &nbsp;&rarr;</span>
+                        <span class="spinner" id="btnSpinner"></span>
+                    </button>
+
+                    <p class="form-error" id="formError">
+                        Something went wrong. Please try again.
+                    </p>
+
+                </form>
+
+                <!-- Success state (shown after submit) -->
+                <div class="success-state" id="successState">
+                    <div class="success-icon">
+                        <svg viewBox="0 0 24 24">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <h2 class="success-headline">You&#8217;re on the list.</h2>
+                    <p class="success-body">
+                        Thank you for your interest in Metabolica.
+                        We&#8217;ll be in touch as we approach launch.
+                    </p>
+                </div>
+
+            </div><!-- /form-card -->
+
+            <p class="form-footnote">
+                Your information is kept strictly private and will never be shared or sold.
+            </p>
+
+        </div>
+    </main>
+
+    <!-- ═══ FOOTER ════════════════════════════════ -->
+    <footer>
+        <a href="index.html" class="footer-logo">Metabolica</a>
+        <span class="footer-copy">&copy; 2026 Rallis Wellness Inc. &nbsp;&middot;&nbsp; Patent pending.</span>
+    </footer>
+
+    <!-- ═══ SCRIPTS ══════════════════════════════ -->
+    <script>
+        /* ─── Mobile menu ─────────────────────── */
+        const menuBtn    = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuBtn.addEventListener('click', () => {
+            const open = mobileMenu.classList.toggle('open');
+            menuBtn.setAttribute('aria-expanded', open);
+            const s = menuBtn.querySelectorAll('span');
+            if (open) {
+                s[0].style.transform = 'translateY(6.5px) rotate(45deg)';
+                s[1].style.opacity = '0';
+                s[2].style.transform = 'translateY(-6.5px) rotate(-45deg)';
+            } else {
+                s[0].style.transform = s[1].style.opacity = s[2].style.transform = '';
+            }
+        });
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('open');
+            menuBtn.setAttribute('aria-expanded', false);
+            const s = menuBtn.querySelectorAll('span');
+            s[0].style.transform = s[1].style.opacity = s[2].style.transform = '';
+        }
+
+        window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });
+
+        /* ─── Phone formatting ────────────────── */
+        document.getElementById('phone').addEventListener('input', function () {
+            let val = this.value.replace(/\D/g, '');
+            if (val.length > 10) val = val.slice(0, 10);
+            if (val.length >= 7) {
+                val = '(' + val.slice(0,3) + ') ' + val.slice(3,6) + '-' + val.slice(6);
+            } else if (val.length >= 4) {
+                val = '(' + val.slice(0,3) + ') ' + val.slice(3);
+            } else if (val.length > 0) {
+                val = '(' + val;
+            }
+            this.value = val;
+        });
+
+        /* ─── Form submission ─────────────────── */
+
+        /*
+         * TO CONNECT THIS FORM TO GO HIGH LEVEL:
+         * 1. In GHL, go to Automation → Workflows → New Workflow
+         * 2. Add a "Webhook" trigger — copy the webhook URL it generates
+         * 3. Replace the placeholder below with that URL
+         *
+         * GHL will receive: first_name, last_name, email, phone
+         */
+        const GHL_WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/HUffpDkhXiZLuTLd3ToP/webhook-trigger/07ff6ec4-c2ae-46eb-9734-03dac1361c33';
+
+        document.getElementById('waitlistForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName  = document.getElementById('lastName').value.trim();
+            const email     = document.getElementById('email').value.trim();
+            const phone     = document.getElementById('phone').value.trim();
+            const error     = document.getElementById('formError');
+            const btn       = document.getElementById('submitBtn');
+            const label     = document.getElementById('btnLabel');
+            const spinner   = document.getElementById('btnSpinner');
+
+            // Basic validation
+            if (!firstName || !lastName || !email) {
+                error.style.display = 'block';
+                error.textContent = 'Please fill in your name and email address.';
+                return;
+            }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                error.style.display = 'block';
+                error.textContent = 'Please enter a valid email address.';
+                return;
+            }
+
+            error.style.display = 'none';
+            btn.disabled = true;
+            label.style.display = 'none';
+            spinner.style.display = 'block';
+
+            try {
+                await fetch(GHL_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        first_name: firstName,
+                        last_name:  lastName,
+                        email:      email,
+                        phone:      phone ? '+1' + phone.replace(/\D/g, '') : ''
+                    })
+                });
+
+                // Show success regardless of response — GHL webhooks may not return CORS headers
+                document.getElementById('waitlistForm').style.display = 'none';
+                document.getElementById('successState').style.display = 'flex';
+
+            } catch (err) {
+                // If webhook is not yet configured, still show success to user
+                // (remove this block once GHL_WEBHOOK_URL is set)
+                if (GHL_WEBHOOK_URL === 'YOUR_GHL_WEBHOOK_URL_HERE') {
+                    document.getElementById('waitlistForm').style.display = 'none';
+                    document.getElementById('successState').style.display = 'flex';
+                } else {
+                    btn.disabled = false;
+                    label.style.display = 'inline';
+                    spinner.style.display = 'none';
+                    error.style.display = 'block';
+                    error.textContent = 'Something went wrong. Please try again.';
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
