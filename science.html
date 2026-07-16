@@ -75,7 +75,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-height);bac
 
 /* ---------- PAGE HEADER (centered, matches About / Ingredients) ---------- */
 .page-header{padding-top:var(--nav-height);width:100%;display:flex;flex-direction:column;align-items:center;text-align:center}
-.page-header-inner{padding:5rem 2rem 4rem;max-width:820px;width:100%}
+.page-header-inner{padding:5rem 2rem 4rem;max-width:980px;width:100%}
 .page-header .eyebrow{justify-content:center;margin-bottom:1.25rem;color:rgba(21,53,86,.45);font-weight:500}
 .page-header .eyebrow::before{display:none}
 .page-title{font-family:var(--serif);font-size:clamp(2rem,5.6vw,6.5rem);font-weight:400;line-height:.95;letter-spacing:0;color:var(--navy);margin:0 0 1.5rem}
@@ -282,6 +282,7 @@ footer{background:var(--navy-deep);display:flex;align-items:center;justify-conte
     <li><a href="science.html" class="active">Science</a></li>
     <li><a href="about.html">About Us</a></li>
     <li><a href="ingredients.html">Ingredients</a></li>
+    <li><a href="contact.html">Contact</a></li>
   </ul>
   <div class="nav-right"><a href="waitlist.html" class="nav-cta">Join Waitlist &nbsp;&rarr;</a></div>
   <button class="nav-hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -290,6 +291,7 @@ footer{background:var(--navy-deep);display:flex;align-items:center;justify-conte
   <a href="science.html" onclick="closeMobileMenu()">Science</a>
   <a href="about.html" onclick="closeMobileMenu()">About Us</a>
   <a href="ingredients.html" onclick="closeMobileMenu()">Ingredients</a>
+  <a href="contact.html" onclick="closeMobileMenu()">Contact</a>
   <a href="waitlist.html" onclick="closeMobileMenu()">Join Waitlist &rarr;</a>
 </div>
 
@@ -297,13 +299,14 @@ footer{background:var(--navy-deep);display:flex;align-items:center;justify-conte
 <header class="page-header">
   <div class="page-header-inner">
     <span class="eyebrow reveal">The Science</span>
-    <h1 class="page-title reveal">Cancer as a<br>metabolic disease.</h1>
+    <h1 class="page-title reveal">Cancer as a<br><span style="white-space:nowrap">metabolic disease.</span></h1>
     <p class="page-subtitle reveal">Tumor cells are metabolically inflexible, leaning on glucose and glutamine for fuel and sensitized by insulin, IGF-1 and inflammation. Metabolica treats every ingredient as a signal, not just a calorie, weighing what each one does to the metabolic terrain before it earns a place in the formula.</p>
   </div>
   <div class="page-header-rule"></div>
 </header>
 
 <!-- whitepaper strip, directly under the hero -->
+<!-- HIDDEN: whitepaper CTA temporarily disabled. Un-comment to restore.
 <div class="whitepaper-strip">
   <div class="whitepaper-inner">
     <div class="whitepaper-info">
@@ -313,6 +316,7 @@ footer{background:var(--navy-deep);display:flex;align-items:center;justify-conte
     <a href="downloads/whitepaper.pdf" class="whitepaper-btn" download>Download PDF &darr;</a>
   </div>
 </div>
+-->
 
 <!-- ===== SECTION 2 / THE GAP (left-justified) ===== -->
 <section class="band reveal">
@@ -1051,9 +1055,11 @@ footer{background:var(--navy-deep);display:flex;align-items:center;justify-conte
   <div class="wrap">
     <p class="eyebrow">Evidence &amp; References</p>
     <h2>The full rationale, cited.</h2>
-    <p>Every mechanism on this page is drawn from the Metabolica whitepaper, built on a thirty-three reference scientific base. The whitepaper is available for clinicians, dietitians and investors who want the complete picture.</p>
+    <p>Every mechanism on this page is drawn from the Metabolica whitepaper, built on a thirty-three reference scientific base.</p>
     <div class="cta-actions">
+      <!-- HIDDEN: whitepaper download temporarily disabled. Un-comment to restore.
       <a href="downloads/whitepaper.pdf" class="btn-light">Download the whitepaper &nbsp;&rarr;</a>
+      -->
       <a href="waitlist.html" class="btn-primary">Join the waitlist &nbsp;&rarr;</a>
     </div>
   </div>

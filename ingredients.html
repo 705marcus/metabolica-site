@@ -337,18 +337,75 @@
             background: rgba(21, 53, 86, 0.10);
         }
 
-        .stats-grid {
+        /* ── At a glance: cards (left) + product image (right) ── */
+        .glance-layout {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.25rem;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 3.5rem;
+            align-items: start;
         }
 
-        .stat-card {
-            background: var(--cream-card);
-            border-radius: 1rem;
-            padding: 2rem 1.75rem;
+        .glance-cards {
             display: flex;
             flex-direction: column;
+            gap: 1rem;
+        }
+
+        .glance-card {
+            position: relative;
+            overflow: hidden;
+            background: var(--cream-card);
+            border-radius: 0.9rem;
+            padding: 1.3rem 1.6rem 1.3rem 1.85rem;
+            display: grid;
+            grid-template-columns: 6rem 1fr;
+            gap: 1.5rem;
+            align-items: center;
+            transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.35s ease;
+        }
+        .glance-card:hover {
+            box-shadow: 0 14px 32px -20px rgba(21, 53, 86, 0.40);
+        }
+
+        /* Navy accent bar draws down the left edge as the card reveals */
+        .glance-card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 3px;
+            background: var(--navy);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.7s cubic-bezier(.22, .61, .36, 1) 0.15s;
+        }
+        .glance-card.visible::before { transform: scaleY(1); }
+
+        /* Slide each card in from the left as it enters the viewport */
+        .glance-card.reveal { transform: translateX(-26px); }
+        .glance-card.reveal.visible { transform: none; }
+
+        .glance-card-lead {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .glance-card-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Product image stays pinned while the cards scroll past it */
+        .glance-media {
+            position: sticky;
+            top: calc(var(--nav-height) + 1.75rem);
+            align-self: start;
+        }
+        .glance-media img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 1.1rem;
         }
 
         .stat-index {
@@ -357,34 +414,32 @@
             font-weight: 500;
             letter-spacing: 0.18em;
             color: rgba(21, 53, 86, 0.35);
-            margin-bottom: 1.5rem;
         }
 
         .stat-value {
             font-family: var(--font-display);
-            font-size: clamp(2.25rem, 4.5vw, 4rem);
+            font-size: clamp(2rem, 3vw, 2.7rem);
             font-weight: 400;
             line-height: 1;
             color: var(--navy);
-            margin-bottom: 0.5rem;
+            font-variant-numeric: tabular-nums;
         }
 
         .stat-label {
             font-family: var(--font-body);
-            font-size: 0.78rem;
+            font-size: 0.82rem;
             font-weight: 600;
             color: var(--navy);
             letter-spacing: 0.01em;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.4rem;
         }
 
         .stat-sub {
             font-family: var(--font-body);
-            font-size: 0.72rem;
+            font-size: 0.74rem;
             font-weight: 400;
-            line-height: 1.6;
+            line-height: 1.55;
             color: rgba(21, 53, 86, 0.5);
-            margin-top: auto;
         }
 
         /* ═══════════════════════════════════════════
@@ -687,8 +742,16 @@
            RESPONSIVE
         ═══════════════════════════════════════════ */
         @media (max-width: 900px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
+            /* Stack the At-a-glance columns: image on top, cards below */
+            .glance-layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .glance-media {
+                position: static;
+                order: -1;
+                max-width: 300px;
+                margin: 0 auto;
             }
 
             .compare-table thead th:first-child {
@@ -713,8 +776,8 @@
 
             /* ── Stats ── */
             .stats-section { padding: 3.5rem 1.25rem 4rem; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
-            .stat-card { padding: 1.5rem 1.25rem; }
+            .glance-card { padding: 1.15rem 1.25rem 1.15rem 1.5rem; grid-template-columns: 5rem 1fr; gap: 1.1rem; }
+            .glance-media { max-width: 260px; }
 
             /* ── Ingredients ── */
             .ingredients-section { padding: 0 1.25rem 4.5rem; }
@@ -748,8 +811,8 @@
         }
 
         @media (max-width: 480px) {
-            .stats-grid { grid-template-columns: 1fr; }
-            .stat-value { font-size: clamp(2rem, 10vw, 2.75rem); }
+            .glance-card { grid-template-columns: 4.5rem 1fr; gap: 0.9rem; }
+            .stat-value { font-size: clamp(1.75rem, 9vw, 2.4rem); }
 
             .ingredient-tag { min-width: 70px; font-size: 0.52rem; padding: 0.25rem 0.55rem; }
             .ingredient-name { font-size: 0.82rem; }
@@ -770,6 +833,7 @@
             <li><a href="science.html">Science</a></li>
             <li><a href="about.html">About Us</a></li>
             <li><a href="ingredients.html" class="active">Ingredients</a></li>
+            <li><a href="contact.html">Contact</a></li>
         </ul>
 
         <div class="nav-right">
@@ -785,6 +849,7 @@
         <a href="science.html" onclick="closeMobileMenu()">Science</a>
         <a href="about.html" onclick="closeMobileMenu()">About Us</a>
         <a href="ingredients.html" onclick="closeMobileMenu()">Ingredients</a>
+        <a href="contact.html" onclick="closeMobileMenu()">Contact</a>
         <a href="waitlist.html" onclick="closeMobileMenu()">Join Waitlist &rarr;</a>
     </div>
 
@@ -799,6 +864,7 @@
     </div>
 
     <!-- ═══ WHITEPAPER DOWNLOAD ═══════════════════ -->
+    <!-- HIDDEN: whitepaper CTA temporarily disabled. Un-comment to restore.
     <div class="whitepaper-strip">
         <div class="whitepaper-inner">
             <div class="whitepaper-info">
@@ -810,6 +876,7 @@
             </a>
         </div>
     </div>
+    -->
 
     <!-- ═══ STATS ════════════════════════════════ -->
     <section class="stats-section">
@@ -818,42 +885,74 @@
             <div class="stats-rule"></div>
         </div>
 
-        <div class="stats-grid">
-            <div class="stat-card reveal">
-                <span class="stat-index">01</span>
-                <span class="stat-value">0g</span>
-                <span class="stat-label">Added sugar</span>
-                <span class="stat-sub">No maltodextrin, glucose syrup, or simple sugars</span>
+        <div class="glance-layout">
+            <!-- LEFT: stat cards, revealed one-by-one on scroll -->
+            <div class="glance-cards">
+                <div class="glance-card reveal">
+                    <div class="glance-card-lead">
+                        <span class="stat-index">01</span>
+                        <span class="stat-value">0g</span>
+                    </div>
+                    <div class="glance-card-body">
+                        <span class="stat-label">Added sugar</span>
+                        <span class="stat-sub">No maltodextrin, glucose syrup, or simple sugars</span>
+                    </div>
+                </div>
+                <div class="glance-card reveal">
+                    <div class="glance-card-lead">
+                        <span class="stat-index">02</span>
+                        <span class="stat-value">&#8776;15g</span>
+                    </div>
+                    <div class="glance-card-body">
+                        <span class="stat-label">Plant protein per serving</span>
+                        <span class="stat-sub">Rice + pea blend &mdash; below mTOR-activation threshold</span>
+                    </div>
+                </div>
+                <div class="glance-card reveal">
+                    <div class="glance-card-lead">
+                        <span class="stat-index">03</span>
+                        <span class="stat-value">MCT</span>
+                    </div>
+                    <div class="glance-card-body">
+                        <span class="stat-label">Sole fat source</span>
+                        <span class="stat-sub">C8/C10 only &mdash; no canola, soy, or corn oil</span>
+                    </div>
+                </div>
+                <div class="glance-card reveal">
+                    <div class="glance-card-lead">
+                        <span class="stat-index">04</span>
+                        <span class="stat-value">&lt;15</span>
+                    </div>
+                    <div class="glance-card-body">
+                        <span class="stat-label">Glycemic index</span>
+                        <span class="stat-sub">vs. &gt;65&ndash;70 in Ensure&reg; &amp; Boost&reg;</span>
+                    </div>
+                </div>
+                <div class="glance-card reveal">
+                    <div class="glance-card-lead">
+                        <span class="stat-index">05</span>
+                        <span class="stat-value">0</span>
+                    </div>
+                    <div class="glance-card-body">
+                        <span class="stat-label">Added iron or copper</span>
+                        <span class="stat-sub">Intentionally excluded &mdash; pro-angiogenic risk factors</span>
+                    </div>
+                </div>
+                <div class="glance-card reveal">
+                    <div class="glance-card-lead">
+                        <span class="stat-index">06</span>
+                        <span class="stat-value">&#8764;50%</span>
+                    </div>
+                    <div class="glance-card-body">
+                        <span class="stat-label">Daily value micronutrients</span>
+                        <span class="stat-sub">Physiologic dosing &mdash; not pharmacologic excess</span>
+                    </div>
+                </div>
             </div>
-            <div class="stat-card reveal reveal-delay-1">
-                <span class="stat-index">02</span>
-                <span class="stat-value">&#8776;15g</span>
-                <span class="stat-label">Plant protein per serving</span>
-                <span class="stat-sub">Rice + pea blend &mdash; below mTOR-activation threshold</span>
-            </div>
-            <div class="stat-card reveal reveal-delay-2">
-                <span class="stat-index">03</span>
-                <span class="stat-value">MCT</span>
-                <span class="stat-label">Sole fat source</span>
-                <span class="stat-sub">C8/C10 only &mdash; no canola, soy, or corn oil</span>
-            </div>
-            <div class="stat-card reveal reveal-delay-3">
-                <span class="stat-index">04</span>
-                <span class="stat-value">&lt;15</span>
-                <span class="stat-label">Glycemic index</span>
-                <span class="stat-sub">vs. &gt;65&ndash;70 in Ensure&reg; &amp; Boost&reg;</span>
-            </div>
-            <div class="stat-card reveal reveal-delay-4">
-                <span class="stat-index">05</span>
-                <span class="stat-value">0</span>
-                <span class="stat-label">Added iron or copper</span>
-                <span class="stat-sub">Intentionally excluded &mdash; pro-angiogenic risk factors</span>
-            </div>
-            <div class="stat-card reveal reveal-delay-5">
-                <span class="stat-index">06</span>
-                <span class="stat-value">&#8764;50%</span>
-                <span class="stat-label">Daily value micronutrients</span>
-                <span class="stat-sub">Physiologic dosing &mdash; not pharmacologic excess</span>
+
+            <!-- RIGHT: product powder image, pinned while cards scroll -->
+            <div class="glance-media reveal reveal-delay-1">
+                <img src="images/product-powder.png" alt="Metabolica Vanilla single-serve sachet with powder">
             </div>
         </div>
     </section>
@@ -1225,6 +1324,39 @@
         }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        /* ─── At-a-glance: count-up motion on the stat values ─── */
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function countUp(el) {
+            const finalHTML = el.innerHTML;                 // e.g. "&#8776;15g" -> "≈15g"
+            const finalText = el.textContent;
+            const m = finalText.match(/^(\D*)(\d+)(\D*)$/); // split prefix / number / suffix
+            if (prefersReduced || !m) return;               // non-numeric (e.g. "MCT") stays as-is
+            const prefix = m[1], target = parseInt(m[2], 10), suffix = m[3];
+            if (target === 0) return;                        // nothing to animate up to
+            const duration = 900, start = performance.now();
+            function tick(now) {
+                const p = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - p, 3);        // easeOutCubic
+                el.textContent = prefix + Math.round(eased * target) + suffix;
+                if (p < 1) requestAnimationFrame(tick);
+                else el.innerHTML = finalHTML;               // restore exact original markup
+            }
+            requestAnimationFrame(tick);
+        }
+
+        const countObserver = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    countUp(e.target);
+                    countObserver.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.6 });
+
+        document.querySelectorAll('.glance-card .stat-value')
+                .forEach(el => countObserver.observe(el));
     </script>
 
 </body>

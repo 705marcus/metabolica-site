@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join the Waitlist — Metabolica</title>
-    <meta name="description" content="Join the Metabolica patient waitlist to be among the first to access oncology-grade clinical nutrition designed for cancer patients in treatment and recovery.">
-    <link rel="canonical" href="https://www.metabolica.life/waitlist.html">
+    <title>Contact — Metabolica</title>
+    <meta name="description" content="For physicians and clinic owners interested in offering Metabolica. Reach our clinical team about practitioner distribution, clinical protocols, and dedicated support.">
+    <link rel="canonical" href="https://www.metabolica.life/contact.html">
     <link rel="icon" type="image/svg+xml" href="/logo/wordmark.svg">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Metabolica">
-    <meta property="og:title" content="Join the Waitlist — Metabolica">
-    <meta property="og:description" content="Be among the first to access oncology-grade clinical nutrition designed for cancer patients in treatment and recovery.">
-    <meta property="og:url" content="https://www.metabolica.life/waitlist.html">
+    <meta property="og:title" content="Contact — Metabolica">
+    <meta property="og:description" content="For physicians and clinic owners interested in offering Metabolica in their practice.">
+    <meta property="og:url" content="https://www.metabolica.life/contact.html">
     <meta property="og:image" content="https://www.metabolica.life/images/Product+graphic.jpg">
     <meta property="og:image:alt" content="Metabolica clinical nutrition product">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Join the Waitlist — Metabolica">
-    <meta name="twitter:description" content="Be among the first to access oncology-grade clinical nutrition designed for cancer patients in treatment and recovery.">
+    <meta name="twitter:title" content="Contact — Metabolica">
+    <meta name="twitter:description" content="For physicians and clinic owners interested in offering Metabolica in their practice.">
     <meta name="twitter:image" content="https://www.metabolica.life/images/Product+graphic.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -111,6 +111,7 @@
         }
 
         .nav-center a:hover { opacity: 0.45; }
+        .nav-center a.active { font-weight: 600; }
 
         .nav-right { flex-shrink: 0; }
 
@@ -194,9 +195,9 @@
             padding-bottom: 5rem;
         }
 
-        .waitlist-wrap {
+        .contact-wrap {
             width: 100%;
-            max-width: 520px;
+            max-width: 560px;
             padding: 5rem 2rem 0;
             display: flex;
             flex-direction: column;
@@ -226,7 +227,7 @@
             font-weight: 400;
             line-height: 1.75;
             color: rgba(21, 53, 86, 0.60);
-            max-width: 380px;
+            max-width: 420px;
             margin: 0 auto 3rem;
             letter-spacing: 0.01em;
         }
@@ -276,7 +277,8 @@
             color: rgba(21, 53, 86, 0.50);
         }
 
-        .field input {
+        .field input,
+        .field textarea {
             font-family: var(--font-body);
             font-size: 0.92rem;
             font-weight: 400;
@@ -292,41 +294,23 @@
             border-radius: 0;
         }
 
-        .field input::placeholder {
+        .field textarea {
+            resize: vertical;
+            min-height: 90px;
+            line-height: 1.6;
+        }
+
+        .field input::placeholder,
+        .field textarea::placeholder {
             color: rgba(21, 53, 86, 0.25);
         }
 
-        .field input:focus {
+        .field input:focus,
+        .field textarea:focus {
             border-bottom-color: var(--navy);
         }
 
-        /* Phone field with flag prefix */
-        .phone-wrap {
-            display: flex;
-            align-items: flex-end;
-            gap: 0.5rem;
-        }
-
-        .phone-prefix {
-            font-family: var(--font-body);
-            font-size: 0.92rem;
-            font-weight: 400;
-            color: rgba(21, 53, 86, 0.40);
-            border-bottom: 1px solid rgba(21, 53, 86, 0.18);
-            padding: 0.6rem 0 0.55rem;
-            flex-shrink: 0;
-            line-height: 1;
-        }
-
-        .phone-wrap input {
-            border-bottom: 1px solid rgba(21, 53, 86, 0.18);
-        }
-
-        .phone-wrap input:focus {
-            border-bottom-color: var(--navy);
-        }
-
-        /* Divider between name row and email/phone */
+        /* Divider between field groups */
         .field-divider {
             width: 100%;
             height: 1px;
@@ -404,6 +388,12 @@
             letter-spacing: 0.01em;
         }
 
+        .form-footnote a {
+            color: rgba(21, 53, 86, 0.55);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
         /* ═══════════════════════════════════════════
            SUCCESS STATE
         ═══════════════════════════════════════════ */
@@ -449,7 +439,7 @@
             font-size: 0.88rem;
             color: rgba(21, 53, 86, 0.60);
             line-height: 1.7;
-            max-width: 320px;
+            max-width: 340px;
         }
 
         /* ═══════════════════════════════════════════
@@ -503,7 +493,7 @@
             .nav-center { display: none; }
             .nav-hamburger { display: flex; }
 
-            .waitlist-wrap { padding: 3.5rem 1.25rem 0; }
+            .contact-wrap { padding: 3.5rem 1.25rem 0; }
             .form-card { padding: 2rem 1.5rem; }
             .field-row { grid-template-columns: 1fr; gap: 0; }
             footer { padding: 2rem 1.5rem; }
@@ -524,11 +514,11 @@
             <li><a href="science.html">Science</a></li>
             <li><a href="about.html">About Us</a></li>
             <li><a href="ingredients.html">Ingredients</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="contact.html" class="active">Contact</a></li>
         </ul>
 
         <div class="nav-right">
-            <a href="index.html" class="nav-back">&larr; &nbsp;Back</a>
+            <a href="waitlist.html" class="nav-back">Join Waitlist &nbsp;&rarr;</a>
         </div>
 
         <button class="nav-hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false">
@@ -541,27 +531,27 @@
         <a href="about.html" onclick="closeMobileMenu()">About Us</a>
         <a href="ingredients.html" onclick="closeMobileMenu()">Ingredients</a>
         <a href="contact.html" onclick="closeMobileMenu()">Contact</a>
-        <a href="index.html" onclick="closeMobileMenu()">&larr; Back to Home</a>
+        <a href="waitlist.html" onclick="closeMobileMenu()">Join Waitlist &rarr;</a>
     </div>
 
     <!-- ═══ MAIN ═══════════════════════════════════ -->
     <main>
-        <div class="waitlist-wrap">
+        <div class="contact-wrap">
 
-            <span class="eyebrow form-eyebrow">Patient Waitlist</span>
+            <span class="eyebrow form-eyebrow">For Clinicians</span>
 
-            <h1 class="form-headline">Reserve your place.</h1>
+            <h1 class="form-headline">Bring Metabolica<br>to your patients.</h1>
 
             <p class="form-sub">
-                Be among the first to access Metabolica when we launch.
-                We'll be in touch with early access details and clinical updates.
+                For physicians and clinic owners interested in offering Metabolica in their practice.
+                Tell us a little about your clinic and a member of our clinical team will be in touch.
             </p>
 
             <!-- Form card -->
             <div class="form-card">
 
                 <!-- Default: form -->
-                <form id="waitlistForm" novalidate>
+                <form id="contactForm" novalidate>
 
                     <!-- Name row -->
                     <div class="field-row">
@@ -593,36 +583,55 @@
 
                     <!-- Email -->
                     <div class="field">
-                        <label for="email">Email Address</label>
+                        <label for="email">Work Email</label>
                         <input
                             type="email"
                             id="email"
                             name="email"
-                            placeholder="jane@example.com"
+                            placeholder="jane@yourclinic.com"
                             autocomplete="email"
                             required
                         >
                     </div>
 
-                    <div class="field-divider"></div>
-
-                    <!-- Phone -->
-                    <div class="field">
-                        <label for="phone">Phone Number</label>
-                        <div class="phone-wrap">
-                            <span class="phone-prefix">+1</span>
+                    <!-- Clinic + Role row -->
+                    <div class="field-row">
+                        <div class="field">
+                            <label for="clinic">Clinic / Practice</label>
                             <input
-                                type="tel"
-                                id="phone"
-                                name="phone"
-                                placeholder="(555) 000-0000"
-                                autocomplete="tel"
+                                type="text"
+                                id="clinic"
+                                name="clinic"
+                                placeholder="Practice name"
+                                autocomplete="organization"
+                            >
+                        </div>
+                        <div class="field">
+                            <label for="role">Your Role</label>
+                            <input
+                                type="text"
+                                id="role"
+                                name="role"
+                                placeholder="Physician, Clinic Owner…"
+                                autocomplete="organization-title"
                             >
                         </div>
                     </div>
 
+                    <div class="field-divider"></div>
+
+                    <!-- Message -->
+                    <div class="field">
+                        <label for="message">How can we help?</label>
+                        <textarea
+                            id="message"
+                            name="message"
+                            placeholder="Tell us about your practice and what you're looking for."
+                        ></textarea>
+                    </div>
+
                     <button type="submit" class="btn-submit" id="submitBtn">
-                        <span id="btnLabel">Join the Waitlist &nbsp;&rarr;</span>
+                        <span id="btnLabel">Send Message &nbsp;&rarr;</span>
                         <span class="spinner" id="btnSpinner"></span>
                     </button>
 
@@ -639,17 +648,19 @@
                             <polyline points="20 6 9 17 4 12"></polyline>
                         </svg>
                     </div>
-                    <h2 class="success-headline">You&#8217;re on the list.</h2>
+                    <h2 class="success-headline">Thank you for reaching out.</h2>
                     <p class="success-body">
-                        Thank you for your interest in Metabolica.
-                        We&#8217;ll be in touch as we approach launch.
+                        We&#8217;ve received your message. A member of our clinical
+                        team will be in touch shortly.
                     </p>
                 </div>
 
             </div><!-- /form-card -->
 
             <p class="form-footnote">
-                Your information is kept strictly private and will never be shared or sold.
+                Prefer email? Write to us at
+                <a href="mailto:marcus@metabolica.life">marcus@metabolica.life</a>.
+                Your information is kept private and is never shared or sold.
             </p>
 
         </div>
@@ -689,48 +700,35 @@
 
         window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });
 
-        /* ─── Phone formatting ────────────────── */
-        document.getElementById('phone').addEventListener('input', function () {
-            let val = this.value.replace(/\D/g, '');
-            if (val.length > 10) val = val.slice(0, 10);
-            if (val.length >= 7) {
-                val = '(' + val.slice(0,3) + ') ' + val.slice(3,6) + '-' + val.slice(6);
-            } else if (val.length >= 4) {
-                val = '(' + val.slice(0,3) + ') ' + val.slice(3);
-            } else if (val.length > 0) {
-                val = '(' + val;
-            }
-            this.value = val;
-        });
-
         /* ─── Form submission ─────────────────── */
 
         /*
-         * TO CONNECT THIS FORM TO GO HIGH LEVEL:
-         * 1. In GHL, go to Automation → Workflows → New Workflow
-         * 2. Add a "Webhook" trigger — copy the webhook URL it generates
-         * 3. Replace the placeholder below with that URL
-         *
-         * GHL will receive: first_name, last_name, email, phone
+         * This posts to the same Go High Level account as the waitlist form.
+         * Clinician inquiries are tagged with inquiry_type: "clinician_contact"
+         * and source: "contact_page" so they can be routed to their own
+         * workflow / pipeline in GHL. To send them somewhere else instead,
+         * create a new GHL Webhook trigger and paste its URL below.
          */
         const GHL_WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/HUffpDkhXiZLuTLd3ToP/webhook-trigger/07ff6ec4-c2ae-46eb-9734-03dac1361c33';
 
-        document.getElementById('waitlistForm').addEventListener('submit', async function (e) {
+        document.getElementById('contactForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
             const firstName = document.getElementById('firstName').value.trim();
             const lastName  = document.getElementById('lastName').value.trim();
             const email     = document.getElementById('email').value.trim();
-            const phone     = document.getElementById('phone').value.trim();
+            const clinic    = document.getElementById('clinic').value.trim();
+            const role      = document.getElementById('role').value.trim();
+            const message   = document.getElementById('message').value.trim();
             const error     = document.getElementById('formError');
             const btn       = document.getElementById('submitBtn');
             const label     = document.getElementById('btnLabel');
             const spinner   = document.getElementById('btnSpinner');
 
             // Basic validation
-            if (!firstName || !lastName || !email) {
+            if (!firstName || !lastName || !email || !message) {
                 error.style.display = 'block';
-                error.textContent = 'Please fill in your name and email address.';
+                error.textContent = 'Please fill in your name, email, and message.';
                 return;
             }
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -749,30 +747,27 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        first_name: firstName,
-                        last_name:  lastName,
-                        email:      email,
-                        phone:      phone ? '+1' + phone.replace(/\D/g, '') : ''
+                        first_name:   firstName,
+                        last_name:    lastName,
+                        email:        email,
+                        clinic:       clinic,
+                        role:         role,
+                        message:      message,
+                        inquiry_type: 'clinician_contact',
+                        source:       'contact_page'
                     })
                 });
 
                 // Show success regardless of response — GHL webhooks may not return CORS headers
-                document.getElementById('waitlistForm').style.display = 'none';
+                document.getElementById('contactForm').style.display = 'none';
                 document.getElementById('successState').style.display = 'flex';
 
             } catch (err) {
-                // If webhook is not yet configured, still show success to user
-                // (remove this block once GHL_WEBHOOK_URL is set)
-                if (GHL_WEBHOOK_URL === 'YOUR_GHL_WEBHOOK_URL_HERE') {
-                    document.getElementById('waitlistForm').style.display = 'none';
-                    document.getElementById('successState').style.display = 'flex';
-                } else {
-                    btn.disabled = false;
-                    label.style.display = 'inline';
-                    spinner.style.display = 'none';
-                    error.style.display = 'block';
-                    error.textContent = 'Something went wrong. Please try again.';
-                }
+                btn.disabled = false;
+                label.style.display = 'inline';
+                spinner.style.display = 'none';
+                error.style.display = 'block';
+                error.textContent = 'Something went wrong. Please try again.';
             }
         });
     </script>
