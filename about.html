@@ -405,7 +405,8 @@
             line-height: 1.2;
             letter-spacing: 0;
             color: var(--white);
-            max-width: 600px;
+            max-width: none;
+            white-space: nowrap;
             margin-bottom: 0.75rem;
         }
 
@@ -504,24 +505,33 @@
                 padding: 3.5rem 0;
             }
 
+            /* Photo + name/title form one tidy profile header, side by side */
+            .member-photo-col {
+                display: flex;
+                align-items: center;
+                gap: 1.25rem;
+            }
+
             /* Compact portrait — keeps the full subject visible */
             .member-photo {
                 aspect-ratio: 3 / 4;
                 width: 150px;
                 max-width: 150px;
+                flex-shrink: 0;
             }
 
             .member-photo img {
                 object-position: center top;
             }
 
-            /* Name + title sit comfortably below the small photo */
+            /* Name + title sit beside the photo, vertically centered */
             .member-photo-caption {
-                margin-top: 0.85rem;
-                padding-top: 0.85rem;
+                margin-top: 0;
+                padding-top: 0;
+                border-top: none;
             }
 
-            .member-name  { font-size: 1.1rem; }
+            .member-name  { font-size: 1.2rem; }
             .member-title { font-size: 0.65rem; }
 
             /* Credential + bio headline get a bit more breathing room */
@@ -532,6 +542,7 @@
             .member-highlight { padding-left: 1rem; }
 
             .about-cta { padding: 4.5rem 1.5rem; }
+            .about-cta-headline { white-space: normal; }
             footer { padding: 1.5rem; flex-direction: column; gap: 0.75rem; text-align: center; }
         }
 
@@ -591,11 +602,12 @@
     <!-- ═══ PAGE HEADER ════════════════════════════ -->
     <header class="page-header">
         <div class="page-header-inner">
-            <span class="eyebrow reveal">The People Behind Metabolica</span>
+            <span class="eyebrow reveal">The Family Behind Metabolica</span>
             <h1 class="page-title reveal reveal-delay-1">About Us.</h1>
             <p class="page-subtitle reveal reveal-delay-2">
-                Built by a family with decades of clinical experience, legal precision,
-                and a conviction that oncology nutrition has been underserved for too long.
+                Our family believes patients facing cancer have been underserved for
+                far too long. We are committed to providing nutrition designed for their
+                biology &mdash; not against it.
             </p>
         </div>
         <div class="page-header-rule"></div>
@@ -676,7 +688,7 @@
             </div>
 
             <div class="member-bio-col reveal reveal-delay-1">
-                <span class="member-credential">Queen&rsquo;s Commerce &amp; Queen&rsquo;s Law &nbsp;&middot;&nbsp; Bennett Jones</span>
+                <span class="member-credential">Queen&rsquo;s Commerce &amp; Queen&rsquo;s Law</span>
 
                 <h2 class="member-bio-headline">
                     Building Metabolica with<br>
@@ -693,16 +705,13 @@
                     </p>
 
                     <div class="member-highlight">
-                        Currently with <em>Bennett Jones</em> &mdash; one of Canada&rsquo;s leading
-                        business law firms &mdash; where he is exposed to complex transactions,
-                        regulatory frameworks, and high-level corporate strategy.
+                        His strengths lie in financial modelling, regulatory alignment, and
+                        operational discipline &mdash; bringing clarity and order to a complex build.
                     </div>
 
                     <p>
                         He has led coordination across legal counsel, formulation teams, and manufacturing
-                        partners, translating strategy into concrete action. His strengths lie in
-                        financial modelling, regulatory alignment, and operational discipline, bringing
-                        clarity and order to an otherwise complex build.
+                        partners, translating strategy into concrete action.
                     </p>
                 </div>
             </div>
