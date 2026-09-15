@@ -562,6 +562,12 @@
 
                 <!-- Default: form -->
                 <form id="waitlistForm" novalidate>
+                    <!-- Honeypot: hidden from humans, bots fill it. Leave empty. -->
+                    <div class="hp-wrap" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
+                        <label for="website_url">Company website</label>
+                        <input type="text" id="website_url" name="website_url" tabindex="-1" autocomplete="off" value="">
+                    </div>
+
 
                     <!-- Name row -->
                     <div class="field-row">
@@ -715,8 +721,18 @@
          */
         const GHL_WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/HUffpDkhXiZLuTLd3ToP/webhook-trigger/07ff6ec4-c2ae-46eb-9734-03dac1361c33';
 
+        const FORM_LOADED_AT = Date.now();
+
         document.getElementById('waitlistForm').addEventListener('submit', async function (e) {
             e.preventDefault();
+
+            // Anti-bot: honeypot filled or submitted within 3s of page load -> pretend success, send nothing
+            const hp = document.getElementById('website_url');
+            if ((hp && hp.value) || (Date.now() - FORM_LOADED_AT) < 3000) {
+                document.getElementById('waitlistForm').style.display = 'none';
+                document.getElementById('successState').style.display = 'flex';
+                return;
+            }
 
             const firstName = document.getElementById('firstName').value.trim();
             const lastName  = document.getElementById('lastName').value.trim();
@@ -752,7 +768,9 @@
                         first_name: firstName,
                         last_name:  lastName,
                         email:      email,
-                        phone:      phone ? '+1' + phone.replace(/\D/g, '') : ''
+                        phone:      phone ? '+1' + phone.replace(/\D/g, '') : '',
+                        source:     'waitlist',
+                        elapsed_ms: Date.now() - FORM_LOADED_AT
                     })
                 });
 

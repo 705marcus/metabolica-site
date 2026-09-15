@@ -552,6 +552,12 @@
 
                 <!-- Default: form -->
                 <form id="contactForm" novalidate>
+                    <!-- Honeypot: hidden from humans, bots fill it. Leave empty. -->
+                    <div class="hp-wrap" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
+                        <label for="company_url">Company website</label>
+                        <input type="text" id="company_url" name="company_url" tabindex="-1" autocomplete="off" value="">
+                    </div>
+
 
                     <!-- Name row -->
                     <div class="field-row">
@@ -711,8 +717,18 @@
          */
         const GHL_WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/HUffpDkhXiZLuTLd3ToP/webhook-trigger/07ff6ec4-c2ae-46eb-9734-03dac1361c33';
 
+        const FORM_LOADED_AT = Date.now();
+
         document.getElementById('contactForm').addEventListener('submit', async function (e) {
             e.preventDefault();
+
+            // Anti-bot: honeypot filled or submitted within 3s of page load -> pretend success, send nothing
+            const hp = document.getElementById('company_url');
+            if ((hp && hp.value) || (Date.now() - FORM_LOADED_AT) < 3000) {
+                document.getElementById('contactForm').style.display = 'none';
+                document.getElementById('successState').style.display = 'flex';
+                return;
+            }
 
             const firstName = document.getElementById('firstName').value.trim();
             const lastName  = document.getElementById('lastName').value.trim();
@@ -754,7 +770,8 @@
                         role:         role,
                         message:      message,
                         inquiry_type: 'clinician_contact',
-                        source:       'contact_page'
+                        source:       'contact_page',
+                        elapsed_ms:   Date.now() - FORM_LOADED_AT
                     })
                 });
 
