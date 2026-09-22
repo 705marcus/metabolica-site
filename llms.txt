@@ -1,0 +1,25 @@
+# Metabolica
+
+> Metabolica is a medical food (21 CFR 101.9, patent pending) formulated for the metabolic demands of cancer patients during treatment and recovery. It is a low glycemic, MCT and ketone based powder with plant protein and carefully dosed micronutrients, with no added sugar, maltodextrin, dairy or omega-6 seed oils. It can serve as a partial meal replacement on treatment days when solid intake is limited. Developed by Dr. Steve Rallis DC, ND, drawing on 25 years in clinical integrative oncology. Practitioner recommended. Not intended to diagnose, treat, cure or prevent any disease.
+
+Anchor line: Feed the patient, not the cancer.
+
+## Product
+- Metabolica Medical Food, Vanilla: 14 single serve powder sachets, 15 g each (1.5 serve). Naturally sweet with notes of cinnamon.
+- Six coordinated metabolic levers: glucose and IGF-1, ketone energy, glutamine and protein, inflammation and redox, micronutrients, digestion.
+- Currently pre-launch. Patients can join the waitlist; practitioners and clinics can contact the clinical team.
+
+## Pages
+- [Home](https://www.metabolica.life/): overview, the six clinical pillars, and the founding story.
+- [Science](https://www.metabolica.life/science.html): the metabolic rationale, pathway diagrams, and care-journey use.
+- [Ingredients](https://www.metabolica.life/ingredients.html): every ingredient, its category, and its role.
+- [About](https://www.metabolica.life/about.html): Dr. Steve Rallis and the Rallis family team.
+- [Contact](https://www.metabolica.life/contact.html): practitioner and clinic inquiries.
+- [Join the Waitlist](https://www.metabolica.life/waitlist.html): patient waitlist.
+- [Whitepaper (PDF)](https://www.metabolica.life/downloads/whitepaper.pdf)
+
+## Common questions this site answers
+- What is a medical food for cancer patients?
+- Is there a meal replacement designed for people going through chemotherapy or radiation?
+- Why do conventional nutrition shakes contain sugar, maltodextrin and dairy protein, and why does that matter metabolically?
+- What are MCT and ketone based fats, and what is BHB?
